@@ -55,14 +55,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 								</styled.CartItemTitle>
 								<styled.QuantityPriceContainer>
 									<QuantityControl />
-									<styled.CartItemPrice>USD 2,000</styled.CartItemPrice>
+									<styled.CartItemPrice>USD 2,000,100</styled.CartItemPrice>
 								</styled.QuantityPriceContainer>
 							</styled.CartDetails>
 							<styled.CartItemImageWrapper>
-								<styled.CartItemImage
-									src="/src/assets/images/item1.png"
-									alt="Item"
-								/>
+								<styled.CartItemImage src="/images/item1.png" alt="Item" />
 							</styled.CartItemImageWrapper>
 							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
 						</styled.CartItem>
@@ -78,10 +75,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 								</styled.QuantityPriceContainer>
 							</styled.CartDetails>
 							<styled.CartItemImageWrapper>
-								<styled.CartItemImage
-									src="/src/assets/images/item1.png"
-									alt="Item"
-								/>
+								<styled.CartItemImage src="/images/item1.png" alt="Item" />
 							</styled.CartItemImageWrapper>
 							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
 						</styled.CartItem>
@@ -97,10 +91,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 								</styled.QuantityPriceContainer>
 							</styled.CartDetails>
 							<styled.CartItemImageWrapper>
-								<styled.CartItemImage
-									src="/src/assets/images/item1.png"
-									alt="Item"
-								/>
+								<styled.CartItemImage src="/images/item1.png" alt="Item" />
 							</styled.CartItemImageWrapper>
 							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
 						</styled.CartItem>
@@ -116,10 +107,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 								</styled.QuantityPriceContainer>
 							</styled.CartDetails>
 							<styled.CartItemImageWrapper>
-								<styled.CartItemImage
-									src="/src/assets/images/item1.png"
-									alt="Item"
-								/>
+								<styled.CartItemImage src="/images/item1.png" alt="Item" />
 							</styled.CartItemImageWrapper>
 							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
 						</styled.CartItem>

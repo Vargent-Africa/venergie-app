@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Colors } from "utils/colors";
+
 export const QuantityControls = styled.label`
 	display: flex;
 	justify-content: space-between;
@@ -17,6 +19,7 @@ export const QuantityBtn = styled.button`
 	padding: 0.2rem 0.6rem;
 	outline: 2px solid transparent;
 	outline-offset: 2px;
+	color: ${Colors.black};
 `;
 
 export const Quantity = styled.span`

@@ -7,33 +7,29 @@ export const ItemWrapper = styled.section`
 `;
 
 export const ItemImgContainer = styled.div`
-	width: 100%;
-	float: none;
+	width: 60rem;
+	float: left;
 	margin-right: 4rem;
 	margin-bottom: 2rem;
 
-	@media (min-width: 768px) {
-		float: left;
+	@media (max-width: 930px) {
 		width: 40rem;
 	}
 
-	@media (min-width: 1024px) {
-		width: 60rem;
+	@media (max-width: 720px) {
+		float: none;
+		width: 100%;
 	}
 `;
 
 export const ItemMainImgContainer = styled.div`
 	width: 100%;
-	height: 37rem;
+	height: 45rem;
 	border-radius: 0.6rem;
 	overflow: hidden;
 
-	@media (min-width: 768px) {
+	@media (max-width: 930px) {
 		height: 35rem;
-	}
-
-	@media (min-width: 1024px) {
-		height: 45rem;
 	}
 `;
 
@@ -46,11 +42,12 @@ export const ItemMainImg = styled.img`
 export const ItemRestImgContainer = styled.div`
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 0.8rem;
+
+	gap: 1.6rem;
 	margin-top: 2.4rem;
 
-	@media (min-width: 640px) {
-		gap: 1.6rem;
+	@media (max-width: 640px) {
+		gap: 0.8rem;
 	}
 `;
 
@@ -60,8 +57,8 @@ export const ItemRestImg = styled.img`
 	object-fit: cover;
 	border-radius: 0.6rem;
 
-	@media (min-width: 640px) {
-		height: 9.6rem;
+	@media (max-width: 640px) {
+		height: 8.6rem;
 	}
 `;
 

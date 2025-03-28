@@ -78,8 +78,12 @@ export const CartItem = styled.div`
 export const CartDetails = styled.div`
 	color: #1e2d2b;
 	width: 70%;
-	font-size: 10px;
+	font-size: 1rem;
 	letter-spacing: 0.02px;
+
+	@media (max-width: 380px) {
+		width: 100%;
+	}
 `;
 
 export const CartItemTitle = styled.h2`
@@ -97,8 +101,9 @@ export const CartItemTitle = styled.h2`
 
 export const QuantityPriceContainer = styled.div`
 	display: flex;
-	justify-content: space-between;
+	flex-wrap: wrap;
 	align-items: center;
+	column-gap: 1.5rem;
 	margin-top: 0.3rem;
 `;
 
@@ -106,12 +111,16 @@ export const CartItemPrice = styled.div`
 	width: inherit;
 	font-size: 1.7rem;
 	letter-spacing: 0.03px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	text-transform: capitalize;
 `;
 
 export const CartItemImageWrapper = styled.div`
 	width: 7rem;
 	height: 7rem;
-	margin-right: 30px;
+	margin-right: 20px;
 `;
 
 export const CartItemImage = styled.img`

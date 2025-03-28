@@ -25,6 +25,10 @@ export const ShippingInfo = styled.h3`
 	margin-top: 3rem;
 `;
 
+export const Form = styled.form`
+	margin-top: 1rem;
+`;
+
 export const FormContainer = styled.div`
 	display: flex;
 	align-items: center;
@@ -37,11 +41,8 @@ export const FormContainer = styled.div`
 `;
 
 export const CheckoutReview = styled.div`
-	/* background-color: #f4f5fb; */
-	/* display: flex;
-	flex-direction: column; */
 	background-color: #f2f2ef;
-	max-height: 80vh;
+	max-height: 82vh;
 	max-width: 40rem;
 	min-width: 30rem;
 	border-radius: 5px;

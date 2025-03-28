@@ -3,7 +3,6 @@ import { Link, Outlet } from "react-router";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 
 import { useCart } from "contexts/cartContext";
-import Logo from "assets/images/venergie_logo.svg";
 import * as common from "styles/ui";
 
 import * as styled from "./styles/main";
@@ -24,7 +23,7 @@ const MainLayout = () => {
 				<common.Container>
 					<styled.MainNav>
 						<Link to="/">
-							<styled.Logo src={Logo} alt="Logo" />
+							<styled.Logo src="/images/venergie_logo.svg" alt="Logo" />
 						</Link>
 						<styled.MainNavLinksContainer ref={menuRef}>
 							<styled.MainNavLinks>

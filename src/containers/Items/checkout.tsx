@@ -16,7 +16,7 @@ const Checkout = () => {
 						<styled.CheckoutInfo>
 							<common.PageTitle>Checkout</common.PageTitle>
 							<styled.ShippingInfo>Shipping Info</styled.ShippingInfo>
-							<form>
+							<styled.Form>
 								<styled.FormContainer>
 									<FormText
 										label="First Name"
@@ -59,7 +59,7 @@ const Checkout = () => {
 									/>
 								</styled.FormContainer>
 								<CheckBox />
-							</form>
+							</styled.Form>
 						</styled.CheckoutInfo>
 						<styled.CheckoutReview>
 							<styled.ReviewTitle>Review your cart</styled.ReviewTitle>
@@ -67,7 +67,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -85,7 +85,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -103,7 +103,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -121,7 +121,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -139,7 +139,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -157,7 +157,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -175,7 +175,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -193,7 +193,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -211,7 +211,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
@@ -229,7 +229,7 @@ const Checkout = () => {
 								<styled.ReviewItem>
 									<styled.ReviewItemImageWrapper>
 										<styled.ReviewItemImage
-											src="/src/assets/images/item1.png"
+											src="/images/item1.png"
 											alt="Item"
 										/>
 									</styled.ReviewItemImageWrapper>
