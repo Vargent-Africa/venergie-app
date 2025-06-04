@@ -8,6 +8,10 @@ import MainLayout from "components/layouts/Main";
 //Misc
 import Loader from "components/misc/Loader";
 
+//Auth
+const Login = lazy(() => import("containers/Auth/Login"));
+const Signup = lazy(() => import("containers/Auth/Signup"));
+
 //Items
 const ItemLists = lazy(() => import("containers/Items/itemList"));
 const Item = lazy(() => import("containers/Items/item"));
@@ -39,6 +43,22 @@ const App = () => {
 						element={
 							<Suspense fallback={<Loader />}>
 								<Checkout />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="auth/login"
+						element={
+							<Suspense fallback={<Loader />}>
+								<Login />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="auth/signup"
+						element={
+							<Suspense fallback={<Loader />}>
+								<Signup />
 							</Suspense>
 						}
 					/>
