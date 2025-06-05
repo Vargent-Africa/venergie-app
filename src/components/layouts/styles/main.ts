@@ -24,7 +24,7 @@ export const MainNav = styled.nav`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 2.5rem 0;
+	padding: 1.6rem 0;
 	background-color: ${Colors.white};
 	width: 100%;
 `;
@@ -107,7 +107,9 @@ export const CartCounter = styled.span`
 `;
 
 export const MainComponent = styled.main`
-	flex-grow: 1;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
 `;
 
 export const MainFooter = styled.footer`
@@ -123,7 +125,7 @@ export const FooterText = styled.footer`
 //menu icon
 export const MenuIconContainer = styled.div`
 	position: absolute;
-	top: 2.8rem;
+	top: 2rem;
 	right: 6rem;
 	width: 2.5rem;
 	height: 2rem;

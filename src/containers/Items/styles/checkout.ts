@@ -9,6 +9,8 @@ export const CheckoutWrapper = styled.section`
 
 export const CheckoutContainer = styled.div`
 	display: flex;
+	background-color: ${Colors.white};
+	border-radius: 5px;
 
 	@media (max-width: 600px) {
 		display: block;
@@ -16,7 +18,7 @@ export const CheckoutContainer = styled.div`
 `;
 
 export const CheckoutInfo = styled.div`
-	padding: 0 4rem 3rem 2rem;
+	padding: 4rem 4rem 3rem 2rem;
 	flex-grow: 1;
 `;
 
@@ -41,11 +43,10 @@ export const FormContainer = styled.div`
 `;
 
 export const CheckoutReview = styled.div`
-	background-color: #f2f2ef;
 	max-height: 82vh;
 	max-width: 40rem;
 	min-width: 30rem;
-	border-radius: 5px;
+
 	padding: 4rem 2rem;
 
 	@media (max-width: 775px) {

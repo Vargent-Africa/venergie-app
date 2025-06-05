@@ -5,7 +5,6 @@ export const Container = styled.div`
 	padding: 0 2rem;
 	margin: auto;
 	overflow: hidden;
-	height: 100%;
 `;
 
 export const PageTitleWrapper = styled.section`

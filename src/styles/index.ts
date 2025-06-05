@@ -15,10 +15,10 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-size: 1.6rem;
-    min-height: 100vh;
+    height: 100%;
     font-weight: 300;
     font-family: "Outfit", serif;
-    background: ${Colors.white};
+    background: ${Colors.lightCoolGray};
     overflow-x: hidden;
   }
 

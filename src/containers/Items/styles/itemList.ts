@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router";
 
+import { Colors } from "utils/colors";
+
 export const ListItemsWrapper = styled.section`
 	margin: 1.6rem 0 3.2rem;
 `;
@@ -27,7 +29,7 @@ export const ListItems = styled.section`
 `;
 
 export const ListItem = styled(Link)`
-	background-color: #e5e7eb;
+	background-color: ${Colors.white};
 	border-radius: 0.5rem;
 	overflow: hidden;
 `;
