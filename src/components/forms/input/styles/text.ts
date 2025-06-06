@@ -35,6 +35,10 @@ export const Input = styled.input<{ disabled?: boolean }>`
 	border-radius: 4px;
 	margin-top: 1rem;
 
+	&::placeholder {
+		font-size: 1.3rem;
+	}
+
 	&:focus {
 		outline: 2px solid transparent;
 		outline-offset: 2px;

@@ -103,11 +103,24 @@ const BaseTinyText = styled.p`
 export const TermsText = styled(BaseTinyText)`
 	margin-top: 2rem;
 `;
+
 export const SignupText = styled(BaseTinyText)``;
 
 export const TermsLink = styled(Link)`
 	color: ${Colors.forestGreen};
 `;
+
 export const SignupLink = styled(Link)`
 	color: ${Colors.forestGreen};
+`;
+
+export const FormContainer = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	margin-top: 1.5rem;
+
+	/* @media (max-width: 875px) {
+		display: block;
+	} */
 `;

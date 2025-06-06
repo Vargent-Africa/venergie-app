@@ -62,7 +62,7 @@ const Login = () => {
 					</styled.TermsText>
 					<styled.SignupText>
 						Don't have a Venergie account yet?{" "}
-						<styled.SignupLink to="/signup">
+						<styled.SignupLink to="/auth/signup">
 							Create an account
 						</styled.SignupLink>
 					</styled.SignupText>
