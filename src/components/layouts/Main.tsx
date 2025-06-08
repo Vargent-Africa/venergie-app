@@ -37,7 +37,9 @@ const MainLayout = () => {
 									<styled.StyledLink to="/">Profile</styled.StyledLink>
 								</styled.NavLink>
 								<styled.NavLink>
-									<styled.StyledLink to="/">Dashboard</styled.StyledLink>
+									<styled.StyledLink to="/dashboard">
+										Dashboard
+									</styled.StyledLink>
 								</styled.NavLink>
 							</styled.MainNavLinks>
 						</styled.MainNavLinksContainer>

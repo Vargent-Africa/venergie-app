@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router";
 //Layouts
 import RootLayout from "components/layouts/Root";
 import MainLayout from "components/layouts/Main";
+import Persist from "./components/layouts/Persist";
+import DashboardLayout from "./components/layouts/User";
 
 //Misc
 import Loader from "components/misc/Loader";
@@ -17,10 +19,25 @@ const ItemLists = lazy(() => import("containers/Items/itemList"));
 const Item = lazy(() => import("containers/Items/item"));
 const Checkout = lazy(() => import("containers/Items/checkout"));
 
+//Dashboard
+const Dashboard = lazy(() => import("containers/Dashboard/Dashboard"));
+
 const App = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<RootLayout />}>
+				<Route element={<Persist />}>
+					<Route element={<DashboardLayout />}>
+						<Route
+							path="dashboard"
+							element={
+								<Suspense fallback={<div>Loading...</div>}>
+									<Dashboard />
+								</Suspense>
+							}
+						/>
+					</Route>
+				</Route>
 				<Route element={<MainLayout />}>
 					<Route
 						path="/"

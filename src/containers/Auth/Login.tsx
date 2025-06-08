@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router";
+
 import FormText from "components/forms/input/Text";
 import CheckBox from "components/forms/checkbox";
 
 import * as styled from "./styles";
 
 const Login = () => {
+	const navigate = useNavigate();
+
+	const navigateToDash = () => {
+		navigate("/dashboard");
+	};
 	return (
 		<styled.AuthWrapper>
 			<styled.FormWrapper>
@@ -50,7 +57,9 @@ const Login = () => {
 									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 								></styled.IconPath>
 							</styled.BtnContentIcon>
-							<styled.BtnContentText>Login to Venergie</styled.BtnContentText>
+							<styled.BtnContentText onClick={navigateToDash}>
+								Login to Venergie
+							</styled.BtnContentText>
 						</styled.BtnContent>
 					</styled.BtnSubmit>
 					<styled.TermsText>
