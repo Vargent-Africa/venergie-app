@@ -1,13 +1,18 @@
-import React from "react";
 import { Outlet } from "react-router";
+
+import * as styled from "./styles/user";
 
 const DashboardLayout = () => {
 	return (
-		<main className="flex-1 pb-16">
-			<section>
-				<Outlet />
-			</section>
-		</main>
+		<styled.UserLayoutWrapper>
+			<styled.SidebarWrapper />
+			<styled.MainWrapper>
+				<styled.MainNav />
+				<section>
+					<Outlet />
+				</section>
+			</styled.MainWrapper>
+		</styled.UserLayoutWrapper>
 	);
 };
 
