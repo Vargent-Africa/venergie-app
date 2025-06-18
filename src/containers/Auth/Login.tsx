@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import FormText from "components/forms/input/Text";
 import CheckBox from "components/forms/checkbox";
@@ -34,9 +34,9 @@ const Login = () => {
 						required
 					/>
 					<CheckBox label="Trust this device?" />
-					<styled.ForgotPassLink to="/forgot-password">
-						Forgot Password?
-					</styled.ForgotPassLink>
+					<Link to="/forgot-password">
+						<styled.ForgotPassLink>Forgot Password?</styled.ForgotPassLink>
+					</Link>
 					<styled.BtnSubmit type="submit" disabled={false}>
 						<styled.BtnContent>
 							<styled.BtnContentIcon
@@ -64,16 +64,16 @@ const Login = () => {
 					</styled.BtnSubmit>
 					<styled.TermsText>
 						By logging in, you agree to our{" "}
-						<styled.TermsLink to="/" target="_blank">
-							terms and conditions
-						</styled.TermsLink>
+						<Link to="/" target="_blank">
+							<styled.TermsLink>terms and conditions</styled.TermsLink>
+						</Link>
 						.
 					</styled.TermsText>
 					<styled.SignupText>
 						Don't have a Venergie account yet?{" "}
-						<styled.SignupLink to="/auth/signup">
-							Create an account
-						</styled.SignupLink>
+						<Link to="/auth/signup">
+							<styled.SignupLink>Create an account</styled.SignupLink>
+						</Link>
 					</styled.SignupText>
 				</styled.Form>
 			</styled.FormWrapper>

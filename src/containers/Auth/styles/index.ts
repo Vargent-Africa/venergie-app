@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from "styled-components";
-import { Link } from "react-router";
 
 import { Colors } from "utils/colors";
 import { Btn } from "styles/ui";
@@ -34,7 +33,7 @@ export const FormSubText = styled.p`
 	margin-top: 1.5rem;
 `;
 
-export const ForgotPassLink = styled(Link)`
+export const ForgotPassLink = styled.span`
 	font-size: 1.4rem;
 	color: ${Colors.forestGreen};
 	margin-top: 1.5rem;
@@ -106,11 +105,11 @@ export const TermsText = styled(BaseTinyText)`
 
 export const SignupText = styled(BaseTinyText)``;
 
-export const TermsLink = styled(Link)`
+export const TermsLink = styled.span`
 	color: ${Colors.forestGreen};
 `;
 
-export const SignupLink = styled(Link)`
+export const SignupLink = styled.span`
 	color: ${Colors.forestGreen};
 `;
 

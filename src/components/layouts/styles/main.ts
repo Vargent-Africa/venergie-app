@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router";
 
 import { Colors } from "utils/colors";
 
@@ -77,7 +76,7 @@ export const NavLink = styled.li`
 	}
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled.span`
 	text-decoration: none;
 
 	&:hover {
@@ -90,20 +89,29 @@ export const CartIconWrapper = styled.div`
 	position: relative;
 `;
 
+export const CartIcon = styled.svg`
+	width: 2.8rem;
+`;
+
+export const CartIconPath = styled.path`
+	opacity: 1;
+`;
+
 export const CartCounter = styled.span`
-	color: ${Colors.white};
+	color: ${Colors.black};
 	padding: 0.5rem;
 	border-radius: 50%;
 	width: 2.2rem;
 	height: 2.2rem;
 	background-color: ${Colors.greenAquaBright};
-	font-size: 1.2rem;
+	font-size: 1.3rem;
+	font-weight: 600;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: absolute;
 	top: -1rem;
-	right: -1.4rem;
+	right: -1.3rem;
 `;
 
 export const MainComponent = styled.main`

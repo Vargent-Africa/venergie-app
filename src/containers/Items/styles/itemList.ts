@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router";
 
 import { Colors } from "utils/colors";
 
@@ -28,7 +27,7 @@ export const ListItems = styled.section`
 	}
 `;
 
-export const ListItem = styled(Link)`
+export const ListItem = styled.div`
 	background-color: ${Colors.white};
 	border-radius: 0.5rem;
 	overflow: hidden;
