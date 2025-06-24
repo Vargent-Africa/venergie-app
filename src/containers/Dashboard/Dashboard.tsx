@@ -1,5 +1,11 @@
+import * as styled from "./styles/dashboard";
+
 const Dashboard = () => {
-	return <div>Dashboard</div>;
+	return (
+		<styled.DashboardWrapper>
+			<styled.DashboardHeader>Dashboard</styled.DashboardHeader>
+		</styled.DashboardWrapper>
+	);
 };
 
 export default Dashboard;

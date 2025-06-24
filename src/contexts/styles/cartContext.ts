@@ -50,6 +50,14 @@ export const HideCart = styled.div`
 	cursor: pointer;
 `;
 
+export const HideCartIcon = styled.svg`
+	width: 2.8rem;
+`;
+
+export const HideCartIconPath = styled.path`
+	opacity: 1;
+`;
+
 export const CartBody = styled.div`
 	flex-grow: 1;
 	margin-top: 3rem;

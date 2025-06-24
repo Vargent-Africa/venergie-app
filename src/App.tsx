@@ -20,7 +20,7 @@ const Item = lazy(() => import("containers/Items/item"));
 const Checkout = lazy(() => import("containers/Items/checkout"));
 
 //Dashboard
-const Dashboard = lazy(() => import("containers/Dashboard/Dashboard"));
+const Dashboard = lazy(() => import("containers/Dashboard/dashboard"));
 
 const App = () => {
 	return (

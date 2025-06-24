@@ -6,4 +6,6 @@ export const Colors = {
 	lightCoolGray: "#f3f4f6",
 	forestGreen: "#009933",
 	veryDarkGray: "#242424",
+	jetGray: "#343434",
+	transparent: "transparent",
 };

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useRef } from "react";
 import { useNavigate } from "react-router";
-import { FaCircleArrowRight } from "react-icons/fa6";
 
 import QuantityControl from "components/misc/QuantityControl";
 
@@ -41,7 +40,20 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 			<styled.CartContainer ref={cartRef}>
 				<styled.CartHead>
 					<styled.HideCart onClick={hideCart}>
-						<FaCircleArrowRight size={25} />
+						<styled.HideCartIcon
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="size-6"
+						>
+							<styled.HideCartIconPath
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+							/>
+						</styled.HideCartIcon>
 					</styled.HideCart>
 					<styled.CartTitle>YOUR CART</styled.CartTitle>
 				</styled.CartHead>
