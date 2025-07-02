@@ -51,7 +51,7 @@ export const SidebarLinks = styled.ul`
 	padding-bottom: 3.2rem;
 	overflow-y: scroll;
 	margin-top: 5.6rem;
-	height: 85vh;
+	height: calc(100% - 3.8rem);
 	${styledScrollbarMixin}
 `;
 
@@ -96,6 +96,6 @@ export const MainSection = styled.section`
 	padding: 4rem 4rem 5.6rem;
 	display: flex;
 	flex-direction: column;
-	min-height: 95vh;
+	height: 100%;
 	margin-left: 28.8rem;
 `;
