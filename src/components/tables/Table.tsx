@@ -1,18 +1,31 @@
+import { JSX } from "react";
 import * as styled from "./styles/table";
 
-const Table = () => {
+type TableProps = {
+	showSearch?: boolean;
+	pageName?: string;
+	pagination?: JSX.Element | null;
+};
+
+const Table = ({
+	showSearch = true,
+	pageName = "",
+	pagination,
+}: TableProps) => {
 	return (
 		<styled.TableWrapper>
-			<styled.TableSearchWrapper>
-				<styled.SearchContainer>
-					<styled.SearchInput
-						type="text"
-						name="firstname"
-						placeholder="Search..."
-					/>
-					<styled.SearchButton>Search</styled.SearchButton>
-				</styled.SearchContainer>
-			</styled.TableSearchWrapper>
+			{showSearch && (
+				<styled.TableSearchWrapper>
+					<styled.SearchContainer>
+						<styled.SearchInput
+							type="text"
+							name="firstname"
+							placeholder={`Search ${pageName}`}
+						/>
+						<styled.SearchButton>Search</styled.SearchButton>
+					</styled.SearchContainer>
+				</styled.TableSearchWrapper>
+			)}
 			<styled.TableContainer>
 				<styled.Table>
 					<styled.TableHead>
@@ -60,11 +73,9 @@ const Table = () => {
 						</styled.TableBodyRow>
 					</styled.TableBody>
 				</styled.Table>
-			</styled.TableContainer>
-			<styled.TableExtra>
 				<styled.TableExtraText>Download as CSV</styled.TableExtraText>
-				{/* <Pagination /> */}
-			</styled.TableExtra>
+				{pagination && pagination}
+			</styled.TableContainer>
 		</styled.TableWrapper>
 	);
 };

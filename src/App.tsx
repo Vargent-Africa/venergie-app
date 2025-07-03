@@ -21,6 +21,7 @@ const Checkout = lazy(() => import("containers/Items/checkout"));
 
 //Dashboard
 const Dashboard = lazy(() => import("containers/Dashboard/dashboard"));
+const OrderHistory = lazy(() => import("containers/Orders/orderHistory"));
 
 const App = () => {
 	return (
@@ -33,6 +34,14 @@ const App = () => {
 							element={
 								<Suspense fallback={<div>Loading...</div>}>
 									<Dashboard />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="order-history"
+							element={
+								<Suspense fallback={<div>Loading...</div>}>
+									<OrderHistory />
 								</Suspense>
 							}
 						/>

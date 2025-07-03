@@ -4,14 +4,14 @@ import { Colors } from "utils/colors";
 
 export const TableWrapper = styled.section`
 	margin-top: 2rem;
+	padding-bottom: 2rem;
 	background-color: ${Colors.white};
 	border-radius: 6px;
 	overflow: hidden;
 `;
 
 export const TableSearchWrapper = styled.div`
-	padding-top: 4rem;
-	padding-bottom: 4rem;
+	padding: 4rem 0 2rem;
 	border-bottom-width: 1px;
 	border-bottom-color: #f5f6fa;
 	width: 100%;
@@ -78,7 +78,7 @@ export const SearchButton = styled.button`
 `;
 
 export const TableContainer = styled.div`
-	padding: 0 4rem;
+	padding: 2rem 4rem 0;
 
 	@media (max-width: 768px) {
 		padding: 0 2.4rem;
@@ -94,10 +94,9 @@ export const Table = styled.table`
 `;
 
 export const TableHead = styled.thead`
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	border-top-color: #f5f6fa;
-	border-bottom-color: #f5f6fa;
+	border: 1px solid #f5f6fa;
+	border-left: none;
+	border-right: none;
 `;
 
 export const TableHeadRow = styled.tr`
@@ -122,6 +121,7 @@ export const TableBodyRow = styled.tr`
 	text-align: left;
 	border-bottom-width: 1px;
 	border-bottom-color: #f5f6fa;
+	border-bottom-style: solid;
 `;
 
 export const TableDataCell = styled.td`
@@ -129,22 +129,10 @@ export const TableDataCell = styled.td`
 	font-size: 1.3rem;
 `;
 
-export const TableExtra = styled.div`
-	padding: 2.4rem 4rem;
-	border-top-width: 1px;
-	border-top-color: #f5f6fa;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	@media (max-width: 768px) {
-		padding: 0 2.4rem;
-		flex-direction: column-reverse;
-	}
-`;
-
 export const TableExtraText = styled.h3`
 	font-size: 1.2rem;
 	cursor: pointer;
 	padding: 0.8rem 0;
+	margin-top: 2rem;
+	display: inline-block;
 `;
