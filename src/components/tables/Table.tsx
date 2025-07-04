@@ -1,17 +1,11 @@
-import { JSX } from "react";
 import * as styled from "./styles/table";
 
 type TableProps = {
 	showSearch?: boolean;
 	pageName?: string;
-	pagination?: JSX.Element | null;
 };
 
-const Table = ({
-	showSearch = true,
-	pageName = "",
-	pagination,
-}: TableProps) => {
+const Table = ({ showSearch = true, pageName = "" }: TableProps) => {
 	return (
 		<styled.TableWrapper>
 			{showSearch && (
@@ -74,7 +68,6 @@ const Table = ({
 					</styled.TableBody>
 				</styled.Table>
 				<styled.TableExtraText>Download as CSV</styled.TableExtraText>
-				{pagination && pagination}
 			</styled.TableContainer>
 		</styled.TableWrapper>
 	);

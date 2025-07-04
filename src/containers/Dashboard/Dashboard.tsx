@@ -16,7 +16,9 @@ const Dashboard = () => {
 						<styled.OrderMoreLink>See All</styled.OrderMoreLink>
 					</Link>
 				</styled.RecentOrderHeader>
-				<Table pageName="Dashboard" />
+				<styled.RecentOrderContainer>
+					<Table pageName="Dashboard" />
+				</styled.RecentOrderContainer>
 			</styled.RecentOrderWrapper>
 		</styled.DashboardWrapper>
 	);

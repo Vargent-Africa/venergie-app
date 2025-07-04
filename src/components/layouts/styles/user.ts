@@ -93,7 +93,7 @@ export const MainNavContent = styled.nav`
 `;
 
 export const MainSection = styled.section`
-	padding: 4rem 4rem 5.6rem;
+	padding: 4rem 4rem;
 	display: flex;
 	flex-direction: column;
 	height: 100%;

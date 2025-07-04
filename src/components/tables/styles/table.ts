@@ -6,7 +6,6 @@ export const TableWrapper = styled.section`
 	margin-top: 2rem;
 	padding-bottom: 2rem;
 	background-color: ${Colors.white};
-	border-radius: 6px;
 	overflow: hidden;
 `;
 
@@ -21,7 +20,7 @@ export const SearchContainer = styled.div`
 	width: 50%;
 	display: flex;
 	align-items: center;
-	padding: 0 4rem;
+	/* padding: 0 4rem; */
 
 	@media (max-width: 768px) {
 		width: 66.666667%;
@@ -78,7 +77,7 @@ export const SearchButton = styled.button`
 `;
 
 export const TableContainer = styled.div`
-	padding: 2rem 4rem 0;
+	padding: 2rem 0 0;
 
 	@media (max-width: 768px) {
 		padding: 0 2.4rem;

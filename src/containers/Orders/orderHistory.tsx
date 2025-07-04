@@ -33,17 +33,13 @@ const OrderHistory = () => {
 		<styled.OrderWrapper>
 			<styled.OrderHeader>Order History</styled.OrderHeader>
 			<styled.OrderContainer>
-				<Table
-					pageName="Orders"
-					pagination={
-						<Pagination
-							page={+page}
-							pages={pages}
-							limit={+limit}
-							changePage={changePage}
-							totalRecords={total}
-						/>
-					}
+				<Table pageName="Orders" />
+				<Pagination
+					page={+page}
+					pages={pages}
+					limit={+limit}
+					changePage={changePage}
+					totalRecords={total}
 				/>
 			</styled.OrderContainer>
 		</styled.OrderWrapper>

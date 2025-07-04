@@ -33,7 +33,6 @@ const Pagination = ({
 		));
 	} else {
 		const startValue = Math.floor((page - 1) / 5) * 5;
-
 		const buttonList = [...Array(5)].map((_, ind) => (
 			<li key={startValue + ind + 1}>
 				<styled.PaginationButton
@@ -48,7 +47,21 @@ const Pagination = ({
 
 		middleNumbers = (
 			<>
-				{page > 5 && (
+				{buttonList}
+				<li>
+					<styled.PaginationButton>...</styled.PaginationButton>
+				</li>
+				<li>
+					<styled.PaginationButton onClick={() => changePage(pages)}>
+						{pages}
+					</styled.PaginationButton>
+				</li>
+			</>
+		);
+
+		if (page > 5) {
+			if (pages - page >= 5) {
+				middleNumbers = (
 					<>
 						<li>
 							<styled.PaginationButton onClick={() => changePage(1)}>
@@ -63,11 +76,7 @@ const Pagination = ({
 								{startValue}
 							</styled.PaginationButton>
 						</li>
-					</>
-				)}
-				{buttonList}
-				{pages - page >= 5 && (
-					<>
+						{buttonList}
 						<li>
 							<styled.PaginationButton>...</styled.PaginationButton>
 						</li>
@@ -77,9 +86,43 @@ const Pagination = ({
 							</styled.PaginationButton>
 						</li>
 					</>
-				)}
-			</>
-		);
+				);
+			} else {
+				let amountLeft = pages - page + 5;
+				middleNumbers = (
+					<>
+						<li>
+							<styled.PaginationButton onClick={() => changePage(1)}>
+								1
+							</styled.PaginationButton>
+						</li>
+						<li>
+							<styled.PaginationButton>...</styled.PaginationButton>
+						</li>
+						<li>
+							<styled.PaginationButton onClick={() => changePage(startValue)}>
+								{startValue}
+							</styled.PaginationButton>
+						</li>
+						{amountLeft > 0 &&
+							[...Array(amountLeft)].map((_, ind) => (
+								<styled.PaginationListItem
+									key={startValue + ind + 1}
+									active={pages < startValue + ind + 1}
+								>
+									<styled.PaginationButton
+										onClick={() => changePage(startValue + ind + 1)}
+										disabled={page === startValue + ind + 1}
+										active={page === startValue + ind + 1}
+									>
+										{startValue + ind + 1}
+									</styled.PaginationButton>
+								</styled.PaginationListItem>
+							))}
+					</>
+				);
+			}
+		}
 	}
 
 	return (
@@ -93,7 +136,7 @@ const Pagination = ({
 			)}
 			<styled.PaginationList>
 				<li>
-					<styled.PaginationButton
+					<styled.PaginationButtonPlain
 						onClick={() => changePage(page - 1)}
 						disabled={page === 1}
 					>
@@ -110,11 +153,11 @@ const Pagination = ({
 								clipRule="evenodd"
 							/>
 						</svg>
-					</styled.PaginationButton>
+					</styled.PaginationButtonPlain>
 				</li>
 				{middleNumbers}
 				<li>
-					<styled.PaginationButton
+					<styled.PaginationButtonPlain
 						onClick={() => changePage(page + 1)}
 						disabled={page === pages}
 					>
@@ -131,7 +174,7 @@ const Pagination = ({
 								clipRule="evenodd"
 							/>
 						</svg>
-					</styled.PaginationButton>
+					</styled.PaginationButtonPlain>
 				</li>
 			</styled.PaginationList>
 		</styled.PaginationWrapper>

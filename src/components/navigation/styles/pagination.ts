@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// import { Colors } from "utils/colors";
+import { Colors } from "utils/colors";
 
 export const PaginationWrapper = styled.div`
 	font-size: 1.3rem;
@@ -24,9 +24,21 @@ export const PaginationList = styled.ul`
 	font-weight: 400;
 `;
 
-export const PaginationButton = styled.button<{ active?: boolean }>`
+export const PaginationListItem = styled.li<{ active?: boolean }>`
+	display: ${({ active }) => (active ? "none" : "block")};
+`;
+
+export const PaginationButtonPlain = styled.button`
 	width: 2.4rem;
 	height: 2.4rem;
 	border-radius: 4px;
-	background-color: ${({ active }) => (active ? "#EBF2FC" : "white")};
+	cursor: pointer;
+`;
+
+export const PaginationButton = styled(PaginationButtonPlain)<{
+	active?: boolean;
+}>`
+	background-color: ${({ active }) =>
+		active ? Colors.greenAquaBright : Colors.white};
+	color: ${({ active }) => (active ? Colors.white : Colors.black)};
 `;
