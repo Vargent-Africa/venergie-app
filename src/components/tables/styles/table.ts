@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Colors } from "utils/colors";
+import { Sizes } from "utils/screenSizes";
 
 export const TableWrapper = styled.section`
 	margin-top: 2rem;
@@ -20,11 +21,20 @@ export const SearchContainer = styled.div`
 	width: 50%;
 	display: flex;
 	align-items: center;
-	/* padding: 0 4rem; */
 
-	@media (max-width: 768px) {
-		width: 66.666667%;
+	@media (max-width: 1000px) {
+		width: 70%;
 	}
+
+	@media (max-width: ${Sizes.md}) {
+		width: 100%;
+	}
+
+	/* @media (max-width: 1000px) {
+		&:nth-child(3) {
+			display: none;
+		}
+	} */
 
 	/* @media (min-width: 640px) {
 		width: 50%; 
@@ -78,10 +88,6 @@ export const SearchButton = styled.button`
 
 export const TableContainer = styled.div`
 	padding: 2rem 0 0;
-
-	@media (max-width: 768px) {
-		padding: 0 2.4rem;
-	}
 `;
 
 export const Table = styled.table`
@@ -110,6 +116,24 @@ export const TableHeadRow = styled.tr`
 
 export const TableHeaderCell = styled.th`
 	display: table-cell;
+
+	@media (max-width: 1085px) {
+		&:nth-child(4) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 1000px) {
+		&:nth-child(3) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 874px) {
+		&:nth-child(5) {
+			display: none;
+		}
+	}
 `;
 
 export const TableBody = styled.tbody`
@@ -127,6 +151,24 @@ export const TableBodyRow = styled.tr`
 export const TableDataCell = styled.td`
 	padding: 1.6rem;
 	font-size: 1.3rem;
+
+	@media (max-width: 1085px) {
+		&:nth-child(4) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 1000px) {
+		&:nth-child(3) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 874px) {
+		&:nth-child(5) {
+			display: none;
+		}
+	}
 `;
 
 export const TableExtraText = styled.h3`

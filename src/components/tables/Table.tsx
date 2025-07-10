@@ -28,7 +28,6 @@ const Table = ({ showSearch = true, pageName = "" }: TableProps) => {
 							<styled.TableHeaderCell>Beneficiary</styled.TableHeaderCell>
 							<styled.TableHeaderCell>Payout Method</styled.TableHeaderCell>
 							<styled.TableHeaderCell>Sent Amount</styled.TableHeaderCell>
-							<styled.TableHeaderCell>Payout Amount</styled.TableHeaderCell>
 							<styled.TableHeaderCell>Date</styled.TableHeaderCell>
 							<styled.TableHeaderCell>Status</styled.TableHeaderCell>
 							<styled.TableHeaderCell>View</styled.TableHeaderCell>
@@ -43,7 +42,6 @@ const Table = ({ showSearch = true, pageName = "" }: TableProps) => {
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
-							<styled.TableDataCell>11223465351</styled.TableDataCell>
 						</styled.TableBodyRow>
 						<styled.TableBodyRow>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
@@ -53,10 +51,8 @@ const Table = ({ showSearch = true, pageName = "" }: TableProps) => {
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
-							<styled.TableDataCell>11223465351</styled.TableDataCell>
 						</styled.TableBodyRow>
 						<styled.TableBodyRow>
-							<styled.TableDataCell>11223465351</styled.TableDataCell>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>
 							<styled.TableDataCell>11223465351</styled.TableDataCell>

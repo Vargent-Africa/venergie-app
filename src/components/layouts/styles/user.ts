@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { Colors } from "utils/colors";
+import { Sizes } from "utils/screenSizes";
 
 export const UserLayoutWrapper = styled.div`
 	position: relative;
@@ -35,6 +36,10 @@ export const SidebarWrapper = styled.aside`
 	display: block;
 	z-index: 30;
 	background-color: ${Colors.veryDarkGray};
+
+	@media (max-width: ${Sizes.md}) {
+		display: none;
+	}
 `;
 
 export const SidebarLogoImg = styled.img`
@@ -98,4 +103,9 @@ export const MainSection = styled.section`
 	flex-direction: column;
 	height: 100%;
 	margin-left: 28.8rem;
+
+	@media (max-width: ${Sizes.md}) {
+		margin-left: 0;
+		padding: 4rem 2rem;
+	}
 `;

@@ -1,5 +1,5 @@
 export const Sizes = {
 	sm: "48rem",
-	md: "76.8rem",
+	md: "778px",
 	lg: "102.4rem",
 };

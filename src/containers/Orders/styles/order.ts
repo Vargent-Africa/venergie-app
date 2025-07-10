@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Colors } from "utils/colors";
+import { Sizes } from "utils/screenSizes";
 
 export const OrderWrapper = styled.section``;
 
@@ -14,4 +15,9 @@ export const OrderContainer = styled.div`
 	border-radius: 6px;
 	overflow: hidden;
 	padding: 0 4rem 4rem;
+
+	@media (max-width: ${Sizes.md}) {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
 `;
