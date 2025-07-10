@@ -45,6 +45,7 @@ export const MainNavLinksContainer = styled.div`
 	left: 0;
 	right: 0;
 	background-color: ${Colors.white};
+	height: 100vh;
 
 	&.show {
 		display: block;

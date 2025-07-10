@@ -107,7 +107,7 @@ export const TableHead = styled.thead`
 export const TableHeadRow = styled.tr`
 	text-align: left;
 	font-weight: 600;
-	font-size: 1.4rem;
+	font-size: 1.3rem;
 
 	& > * {
 		padding: 1.6rem;

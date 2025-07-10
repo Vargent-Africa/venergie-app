@@ -11,7 +11,7 @@ export const UserLayoutWrapper = styled.div`
 	overflow: hidden;
 `;
 
-export const styledScrollbarMixin = css`
+const styledScrollbarMixin = css`
 	scrollbar-width: 0.5rem;
 	&::-webkit-scrollbar-track {
 		background-color: ${Colors.veryDarkGray};
@@ -38,7 +38,17 @@ export const SidebarWrapper = styled.aside`
 	background-color: ${Colors.veryDarkGray};
 
 	@media (max-width: ${Sizes.md}) {
-		display: none;
+		/* display: none; */
+		position: absolute;
+		/* top: 1.5rem; */
+		left: -90% !important;
+		width: 80% !important;
+		transition: 0.5s;
+		padding: 1rem;
+
+		&.showbar {
+			left: 0 !important;
+		}
 	}
 `;
 
@@ -93,8 +103,76 @@ export const MainNav = styled.nav`
 
 export const MainNavContent = styled.nav`
 	display: flex;
-	justify-content: flex-end;
+	/* justify-content: flex-end; */
 	align-items: center;
+	position: relative;
+`;
+
+export const MainIconWrapper = styled.div`
+	position: absolute;
+	top: 2rem;
+	width: 2.5rem;
+	height: 2rem;
+	cursor: pointer;
+	z-index: 1;
+	background: transparent;
+	display: none;
+
+	&.toggle {
+		left: calc(80% + 1rem);
+		transition: left 0.5s linear 1s;
+		span {
+			background: transparent;
+			&:before {
+				top: 0;
+				transform: rotate(45deg);
+				//background: #ffffff;
+			}
+			&:after {
+				top: 0;
+				transform: rotate(-45deg);
+				//background: #ffffff;
+			}
+		}
+	}
+
+	@media (max-width: ${Sizes.md}) {
+		display: block;
+	}
+`;
+
+export const MainIconSpan = styled.span`
+	display: block;
+	width: 2.5rem;
+	height: 3px;
+	background-color: #262626;
+	position: absolute;
+	top: 10px;
+	transition: 0.5s;
+	border-radius: 4px;
+
+	&:before {
+		content: "";
+		position: absolute;
+		top: -6px;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		background-color: #262626;
+		transition: 0.5s;
+		border-radius: 4px;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		top: 6px;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		background-color: #262626;
+		transition: 0.5s;
+		border-radius: 4px;
+	}
 `;
 
 export const MainSection = styled.section`

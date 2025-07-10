@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Colors } from "utils/colors";
+import { Sizes } from "utils/screenSizes";
 
 export const DashboardWrapper = styled.section``;
 
@@ -28,6 +29,10 @@ export const RecentOrderContainer = styled.div`
 	border-radius: 6px;
 	overflow: hidden;
 	padding: 0 4rem 4rem;
+
+	@media (max-width: ${Sizes.md}) {
+		padding: 0 2rem 4rem;
+	}
 `;
 
 export const OrderMoreLink = styled.span`

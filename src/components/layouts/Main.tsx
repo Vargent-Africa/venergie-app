@@ -16,6 +16,14 @@ const MainLayout = () => {
 		barRef.current?.classList.toggle("toggle");
 	};
 
+	const handleNavClick = (e: React.MouseEvent) => {
+		const target = e.target as HTMLElement;
+		// Close dropdown if a link was clicked
+		if (target.closest("a")) {
+			handleShowMenu();
+		}
+	};
+
 	return (
 		<styled.MainWrapper>
 			<styled.MainHeader>
@@ -25,7 +33,7 @@ const MainLayout = () => {
 							<styled.Logo src="/images/venergie_logo.svg" alt="Logo" />
 						</Link>
 						<styled.MainNavLinksContainer ref={menuRef}>
-							<styled.MainNavLinks>
+							<styled.MainNavLinks onClick={handleNavClick}>
 								<styled.NavLink>
 									<Link to="/">
 										<styled.StyledLink>Home</styled.StyledLink>
