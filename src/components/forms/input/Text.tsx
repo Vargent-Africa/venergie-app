@@ -22,7 +22,9 @@ const FormText = (props: FormInputProps) => {
 
 	return (
 		<styled.Wrapper>
-			{showLabel && <styled.FormLabel required>{label}</styled.FormLabel>}
+			{showLabel && (
+				<styled.FormLabel required={required}>{label}</styled.FormLabel>
+			)}
 			<styled.Input {...inputProps} disabled={disabled} required={required} />
 		</styled.Wrapper>
 	);
