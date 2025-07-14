@@ -45,11 +45,11 @@ export const MainNavLinksContainer = styled.div`
 	left: 0;
 	right: 0;
 	background-color: ${Colors.white};
-	height: 100vh;
 
 	&.show {
 		display: block;
 		z-index: 9999;
+		height: 100vh;
 	}
 
 	@media (min-width: 768px) {
