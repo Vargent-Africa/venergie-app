@@ -7,7 +7,7 @@ export const TableWrapper = styled.section`
 	margin-top: 2rem;
 	padding-bottom: 2rem;
 	background-color: ${Colors.white};
-	overflow: hidden;
+	overflow-x: auto;
 `;
 
 export const TableSearchWrapper = styled.div`
@@ -29,17 +29,6 @@ export const SearchContainer = styled.div`
 	@media (max-width: ${Sizes.md}) {
 		width: 100%;
 	}
-
-	/* @media (max-width: 1000px) {
-		&:nth-child(3) {
-			display: none;
-		}
-	} */
-
-	/* @media (min-width: 640px) {
-		width: 50%; 
-		padding: 0 4rem;
-	} */
 `;
 
 export const SearchInput = styled.input`
@@ -87,7 +76,10 @@ export const SearchButton = styled.button`
 `;
 
 export const TableContainer = styled.div`
-	padding: 2rem 0 0;
+	/* padding: 2rem 0 0; */
+	overflow-x: auto;
+	height: calc(100vh - 25rem);
+	scrollbar-width: none;
 `;
 
 export const Table = styled.table`
@@ -95,13 +87,16 @@ export const Table = styled.table`
 	width: 100%;
 	font-size: 1.2rem;
 	font-weight: 400;
-	table-layout: fixed;
 `;
 
 export const TableHead = styled.thead`
 	border: 1px solid #f5f6fa;
 	border-left: none;
 	border-right: none;
+	position: sticky;
+	z-index: 2;
+	top: 0;
+	background-color: ${Colors.white};
 `;
 
 export const TableHeadRow = styled.tr`
@@ -117,22 +112,10 @@ export const TableHeadRow = styled.tr`
 export const TableHeaderCell = styled.th`
 	display: table-cell;
 
-	@media (max-width: 1085px) {
-		&:nth-child(4) {
-			display: none;
-		}
-	}
-
-	@media (max-width: 1000px) {
-		&:nth-child(3) {
-			display: none;
-		}
-	}
-
-	@media (max-width: 874px) {
-		&:nth-child(5) {
-			display: none;
-		}
+	&:nth-child(1) {
+		position: sticky;
+		left: 0;
+		background-color: ${Colors.white};
 	}
 `;
 
@@ -146,28 +129,20 @@ export const TableBodyRow = styled.tr`
 	border-bottom-width: 1px;
 	border-bottom-color: #f5f6fa;
 	border-bottom-style: solid;
+
+	&:nth-child(even) td {
+		background: #eee;
+	}
 `;
 
 export const TableDataCell = styled.td`
 	padding: 1.6rem;
 	font-size: 1.3rem;
 
-	@media (max-width: 1085px) {
-		&:nth-child(4) {
-			display: none;
-		}
-	}
-
-	@media (max-width: 1000px) {
-		&:nth-child(3) {
-			display: none;
-		}
-	}
-
-	@media (max-width: 874px) {
-		&:nth-child(5) {
-			display: none;
-		}
+	&:nth-child(1) {
+		position: sticky;
+		left: 0;
+		background-color: ${Colors.white};
 	}
 `;
 

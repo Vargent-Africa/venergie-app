@@ -1,18 +1,17 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Outlet, Link } from "react-router";
 
 import NavLinks from "components/navigation/NavLinks";
 
-import * as styled from "./styles/user";
+import * as styled from "./styles/userOld";
 
-const DashboardLayoutPush = () => {
+const DashboardLayout = () => {
 	const menuRef = useRef<HTMLDivElement | null>(null);
-
-	const [isOpen, setIsOpen] = useState(false);
+	const sidebarRef = useRef<HTMLElement | null>(null);
 
 	const handleShow = () => {
+		sidebarRef.current?.classList.toggle("showbar");
 		menuRef.current?.classList.toggle("toggle");
-		setIsOpen(!isOpen);
 	};
 
 	const handleNavClick = (e: React.MouseEvent) => {
@@ -25,7 +24,7 @@ const DashboardLayoutPush = () => {
 
 	return (
 		<styled.UserLayoutWrapper>
-			<styled.SidebarWrapper isOpen={isOpen}>
+			<styled.SidebarWrapper ref={sidebarRef}>
 				<Link to="/">
 					<styled.SidebarLogoImg src="/images/venergie_logo.svg" alt="Logo" />
 				</Link>
@@ -88,7 +87,7 @@ const DashboardLayoutPush = () => {
 					</styled.SidebarLink>
 				</styled.SidebarLinks>
 			</styled.SidebarWrapper>
-			<styled.MainWrapper isOpen={isOpen}>
+			<styled.MainWrapper>
 				<styled.MainNav>
 					<styled.MainNavContent>
 						<styled.MainIconWrapper
@@ -108,4 +107,4 @@ const DashboardLayoutPush = () => {
 	);
 };
 
-export default DashboardLayoutPush;
+export default DashboardLayout;
