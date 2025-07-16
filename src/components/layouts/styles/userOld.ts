@@ -4,8 +4,10 @@ import { Colors } from "utils/colors";
 import { Sizes } from "utils/screenSizes";
 
 export const UserLayoutWrapper = styled.div`
+	position: relative;
+	min-height: 100vh;
 	display: flex;
-	height: 100vh;
+	width: 100vw;
 	overflow: hidden;
 `;
 
@@ -26,20 +28,27 @@ const styledScrollbarMixin = css`
 	}
 `;
 
-export const SidebarWrapper = styled.aside<{ isOpen: boolean }>`
-	width: 28.8rem;
-	background-color: ${Colors.veryDarkGray};
-	color: ${Colors.white};
+export const SidebarWrapper = styled.aside`
 	position: fixed;
 	top: 0;
-	left: ${({ isOpen }) => (isOpen ? "0" : "-28.8rem")};
-	height: 100vh;
-	transition: left 0.3s ease;
-	z-index: 1000;
+	width: 28.8rem;
+	height: 100%;
+	display: block;
+	z-index: 30;
+	background-color: ${Colors.veryDarkGray};
 
-	@media (min-width: 778px) {
-		position: relative;
-		left: 0;
+	@media (max-width: ${Sizes.md}) {
+		/* display: none; */
+		position: absolute;
+		/* top: 1.5rem; */
+		left: -90% !important;
+		width: 80% !important;
+		transition: 0.5s;
+		padding: 1rem;
+
+		&.showbar {
+			left: 0 !important;
+		}
 	}
 `;
 
@@ -76,18 +85,9 @@ export const SidebarLinkText = styled.span`
 	font-size: 1.6rem;
 `;
 
-export const MainWrapper = styled.main<{ isOpen: boolean }>`
-	flex: 1;
-	margin-left: 0;
+export const MainWrapper = styled.main`
+	flex: 1 1 0%;
 	padding-bottom: 6.4rem;
-	transition: margin-left 0.3s ease;
-	overflow: auto;
-	scrollbar-width: none;
-
-	@media (max-width: 777px) {
-		margin-left: ${({ isOpen }) => (isOpen ? "28.8rem" : "0")};
-		min-width: ${({ isOpen }) => (isOpen ? "50rem" : "0")};
-	}
 `;
 
 export const MainNav = styled.nav`
@@ -103,6 +103,7 @@ export const MainNav = styled.nav`
 
 export const MainNavContent = styled.nav`
 	display: flex;
+	/* justify-content: flex-end; */
 	align-items: center;
 	position: relative;
 `;
@@ -118,16 +119,19 @@ export const MainIconWrapper = styled.div`
 	display: none;
 
 	&.toggle {
+		left: calc(80% + 1rem);
 		transition: left 0.5s linear 1s;
 		span {
 			background: transparent;
 			&:before {
 				top: 0;
 				transform: rotate(45deg);
+				//background: #ffffff;
 			}
 			&:after {
 				top: 0;
 				transform: rotate(-45deg);
+				//background: #ffffff;
 			}
 		}
 	}
@@ -173,8 +177,10 @@ export const MainIconSpan = styled.span`
 
 export const MainSection = styled.section`
 	padding: 4rem 4rem;
+	display: flex;
+	flex-direction: column;
 	height: 100%;
-	overflow: auto;
+	margin-left: 28.8rem;
 
 	@media (max-width: ${Sizes.md}) {
 		margin-left: 0;

@@ -14,7 +14,7 @@ export const OrderContainer = styled.div`
 	background-color: ${Colors.white};
 	border-radius: 6px;
 	overflow: hidden;
-	padding: 0 4rem 4rem;
+	padding: 0 2rem 4rem;
 
 	@media (max-width: ${Sizes.md}) {
 		padding-left: 2rem;
