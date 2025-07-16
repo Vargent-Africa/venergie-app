@@ -11,8 +11,8 @@ import DashboardLayout from "./components/layouts/User";
 import Loader from "components/misc/Loader";
 
 //Auth
-const Login = lazy(() => import("containers/Auth/Login"));
-const Signup = lazy(() => import("containers/Auth/Signup"));
+const Login = lazy(() => import("containers/Auth/login"));
+const Signup = lazy(() => import("containers/Auth/signup"));
 
 //Items
 const ItemLists = lazy(() => import("containers/Items/itemList"));

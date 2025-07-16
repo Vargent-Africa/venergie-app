@@ -2,6 +2,7 @@ import FormText from "components/forms/input/Text";
 
 import * as styled from "./styles";
 import * as custom from "./styles/signup";
+import { Link } from "react-router";
 
 const Signup = () => {
 	return (
@@ -85,14 +86,16 @@ const Signup = () => {
 					</styled.BtnSubmit>
 					<styled.TermsText>
 						By continuing, you agree to our{" "}
-						<styled.TermsLink to="/" target="_blank">
-							terms and conditions
-						</styled.TermsLink>
+						<Link to="/" target="_blank">
+							<styled.TermsLink>terms and conditions</styled.TermsLink>
+						</Link>
 						.
 					</styled.TermsText>
 					<styled.SignupText>
 						Already have a Venergie account?
-						<styled.SignupLink to="/auth/login"> Log in here</styled.SignupLink>
+						<Link to="/auth/login">
+							<styled.SignupLink>Log in here</styled.SignupLink>
+						</Link>
 					</styled.SignupText>
 				</custom.Form>
 			</styled.FormWrapper>

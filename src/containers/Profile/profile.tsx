@@ -1,5 +1,6 @@
 import FormText from "components/forms/input/Text";
 import FormSelect from "components/forms/select";
+import SubmitButton from "components/misc/button/SubmitButton";
 
 import * as styled from "./styles/profile";
 
@@ -86,6 +87,9 @@ const Profile = () => {
 								placeholder="Enter your country"
 							/>
 						</styled.FormContainer>
+						<styled.SubmitBtnContainer>
+							<SubmitButton />
+						</styled.SubmitBtnContainer>
 					</styled.SectionBlock>
 				</styled.ProfileForm>
 			</styled.ProfileContainer>

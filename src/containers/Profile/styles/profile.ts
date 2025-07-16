@@ -42,3 +42,12 @@ export const FormContainer = styled.div`
 		display: block;
 	}
 `;
+
+export const SubmitBtnContainer = styled.div`
+	width: 50%;
+	margin-top: 2rem;
+
+	@media (max-width: 875px) {
+		width: 100%;
+	}
+`;
