@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 
+import { Sizes } from "utils/screenSizes";
 import { Colors } from "utils/colors";
 import { Btn } from "styles/ui";
 
@@ -17,8 +18,9 @@ export const FormWrapper = styled.div`
 `;
 
 export const Form = styled.form`
-	max-width: 42rem;
-	padding: 4.4rem 3rem;
+	/* max-width: 45rem; */
+	/* min-width: 42rem; */
+	padding: 4.4rem 2rem;
 	border-radius: 6px;
 	background-color: ${Colors.white};
 `;
@@ -116,10 +118,10 @@ export const SignupLink = styled.span`
 export const FormContainer = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 1.5rem;
+	gap: 1rem;
 	margin-top: 1.5rem;
 
-	/* @media (max-width: 875px) {
+	@media (max-width: ${Sizes.md}) {
 		display: block;
-	} */
+	}
 `;

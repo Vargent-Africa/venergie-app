@@ -26,13 +26,13 @@ const styledScrollbarMixin = css`
 	}
 `;
 
-export const SidebarWrapper = styled.aside<{ isOpen: boolean }>`
+export const SidebarWrapper = styled.aside<{ $isOpen: boolean }>`
 	width: 28.8rem;
 	background-color: ${Colors.veryDarkGray};
 	color: ${Colors.white};
 	position: fixed;
 	top: 0;
-	left: ${({ isOpen }) => (isOpen ? "0" : "-28.8rem")};
+	left: ${({ $isOpen }) => ($isOpen ? "0" : "-28.8rem")};
 	height: 100vh;
 	transition: left 0.3s ease;
 	z-index: 1000;
@@ -76,7 +76,7 @@ export const SidebarLinkText = styled.span`
 	font-size: 1.6rem;
 `;
 
-export const MainWrapper = styled.main<{ isOpen: boolean }>`
+export const MainWrapper = styled.main<{ $isOpen: boolean }>`
 	flex: 1;
 	margin-left: 0;
 	padding-bottom: 6.4rem;
@@ -85,8 +85,8 @@ export const MainWrapper = styled.main<{ isOpen: boolean }>`
 	scrollbar-width: none;
 
 	@media (max-width: 777px) {
-		margin-left: ${({ isOpen }) => (isOpen ? "28.8rem" : "0")};
-		min-width: ${({ isOpen }) => (isOpen ? "50rem" : "0")};
+		margin-left: ${({ $isOpen }) => ($isOpen ? "28.8rem" : "0")};
+		min-width: ${({ $isOpen }) => ($isOpen ? "50rem" : "0")};
 	}
 `;
 
@@ -184,18 +184,21 @@ export const MainSection = styled.section`
 
 export const SidebarBottomWrapper = styled.div`
 	width: 100%;
-	color: white;
 	padding: 2rem 5.6rem;
+	position: relative;
+	border-top: 1px solid ${Colors.lightCoolGray};
+	&:hover ul,
+	&:focus-within ul {
+		display: block;
+	}
+`;
+
+export const SettingsMenuLink = styled.a`
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 	gap: 0.8rem;
-	position: relative;
-	border-top: 1px solid ${Colors.lightCoolGray};
-
-	&:hover ul {
-		display: block;
-	}
+	color: ${Colors.white};
 `;
 
 export const SidebarBottomLinks = styled.ul`
@@ -212,14 +215,12 @@ export const SidebarBottomLinks = styled.ul`
 		content: "";
 		position: absolute;
 		bottom: 2rem;
-		left: -1.6rem;
-		width: 0;
-		height: 0;
-		border-bottom: 1.1rem solid ${Colors.jetGray};
-		border-left: 1.1rem solid transparent;
-		border-right: 1.1rem solid transparent;
-		border-radius: 0.3rem 0.3rem 0.15rem 0;
-		transform: rotate(-90deg);
+		left: -0.7rem;
+		width: 1.5rem;
+		height: 1.5rem;
+		background-color: ${Colors.jetGray};
+		border-top-left-radius: 3px;
+		transform: rotate(-45deg);
 	}
 `;
 
@@ -229,6 +230,7 @@ export const SidebarBottomLink = styled.li`
 	align-items: center;
 	gap: 1rem;
 	padding: 1.5rem;
+	cursor: pointer;
 
 	&:not(:last-child) {
 		border-bottom: 1px solid ${Colors.lightCoolGray};

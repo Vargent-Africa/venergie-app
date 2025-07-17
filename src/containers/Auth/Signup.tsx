@@ -1,8 +1,9 @@
+import { Link } from "react-router";
+
 import FormText from "components/forms/input/Text";
 
 import * as styled from "./styles";
 import * as custom from "./styles/signup";
-import { Link } from "react-router";
 
 const Signup = () => {
 	return (
@@ -92,7 +93,7 @@ const Signup = () => {
 						.
 					</styled.TermsText>
 					<styled.SignupText>
-						Already have a Venergie account?
+						Already have a Venergie account?{" "}
 						<Link to="/auth/login">
 							<styled.SignupLink>Log in here</styled.SignupLink>
 						</Link>

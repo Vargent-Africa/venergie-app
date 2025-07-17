@@ -18,6 +18,7 @@ const Signup = lazy(() => import("containers/Auth/signup"));
 const ItemLists = lazy(() => import("containers/Items/itemList"));
 const Item = lazy(() => import("containers/Items/item"));
 const Checkout = lazy(() => import("containers/Items/checkout"));
+const OrderReceived = lazy(() => import("containers/Items/orderReceived"));
 
 //Dashboard
 const Dashboard = lazy(() => import("containers/Dashboard/dashboard"));
@@ -78,6 +79,14 @@ const App = () => {
 						element={
 							<Suspense fallback={<Loader />}>
 								<Checkout />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="items/order-received"
+						element={
+							<Suspense fallback={<Loader />}>
+								<OrderReceived />
 							</Suspense>
 						}
 					/>

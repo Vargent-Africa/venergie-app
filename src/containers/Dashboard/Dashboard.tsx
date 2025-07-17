@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
 import Table from "components/tables/Table";
-import { PageRoutes } from "utils/pageRoutes";
+import PageRoutes from "utils/pageRoutes";
 
 import * as styled from "./styles/dashboard";
 

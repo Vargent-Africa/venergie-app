@@ -20,7 +20,8 @@ const MainLayout = () => {
 		const target = e.target as HTMLElement;
 		// Close dropdown if a link was clicked
 		if (target.closest("a")) {
-			handleShowMenu();
+			menuRef.current?.classList.remove("show");
+			barRef.current?.classList.remove("toggle");
 		}
 	};
 

@@ -1,11 +1,15 @@
+import { useNavigate } from "react-router";
+
 import FormText from "components/forms/input/Text";
 import CheckBox from "components/forms/checkbox";
+import PageRoutes from "utils/pageRoutes";
 
 import * as common from "styles/ui";
-
 import * as styled from "./styles/checkout";
 
 const Checkout = () => {
+	const navigate = useNavigate();
+
 	return (
 		<styled.CheckoutWrapper>
 			<common.Container>
@@ -232,7 +236,11 @@ const Checkout = () => {
 									$4,100
 								</styled.CheckoutSummaryTotalPrice>
 							</styled.CheckoutSummaryContainer>
-							<styled.BtnPayNow>PAY NOW</styled.BtnPayNow>
+							<styled.BtnPayNow
+								onClick={() => navigate(PageRoutes.orderReceived)}
+							>
+								PAY NOW
+							</styled.BtnPayNow>
 						</styled.CheckoutSummaryWrapper>
 					</styled.CheckoutReview>
 				</styled.CheckoutContainer>

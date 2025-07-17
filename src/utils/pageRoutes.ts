@@ -1,4 +1,4 @@
-export const PageRoutes = {
+const PageRoutes = {
 	// Dashboard routes
 	dashboard: "/dashboard",
 	orderHistory: "/order-history",
@@ -6,4 +6,7 @@ export const PageRoutes = {
 
 	// Main routes
 	checkout: "/items/checkout",
+	orderReceived: "/items/order-received",
 };
+
+export default PageRoutes;
