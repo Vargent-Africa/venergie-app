@@ -222,6 +222,18 @@ export const SidebarBottomLinks = styled.ul`
 		border-top-left-radius: 3px;
 		transform: rotate(-45deg);
 	}
+
+	@media (max-width: 538px) {
+		left: 4rem;
+		bottom: 8rem;
+
+		&::before {
+			bottom: -0.7rem;
+			left: calc(50% - 0.75rem);
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 3px;
+		}
+	}
 `;
 
 export const SidebarBottomLink = styled.li`
