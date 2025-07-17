@@ -57,7 +57,7 @@ export const SidebarLinks = styled.ul`
 	padding-bottom: 3.2rem;
 	overflow-y: scroll;
 	margin-top: 5.6rem;
-	height: calc(100% - 3.8rem);
+	height: calc(100% - 17.8rem);
 	${styledScrollbarMixin}
 `;
 
@@ -180,4 +180,66 @@ export const MainSection = styled.section`
 		margin-left: 0;
 		padding: 4rem 2rem;
 	}
+`;
+
+export const SidebarBottomWrapper = styled.div`
+	width: 100%;
+	color: white;
+	padding: 2rem 5.6rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	position: relative;
+	border-top: 1px solid ${Colors.lightCoolGray};
+
+	&:hover ul {
+		display: block;
+	}
+`;
+
+export const SidebarBottomLinks = styled.ul`
+	position: absolute;
+	left: calc(100% + 1.5rem);
+	bottom: 1.1rem;
+	background-color: ${Colors.jetGray};
+	border-radius: 5px;
+	min-width: 20rem;
+	min-height: 6rem;
+	display: none;
+
+	&::before {
+		content: "";
+		position: absolute;
+		bottom: 2rem;
+		left: -1.6rem;
+		width: 0;
+		height: 0;
+		border-bottom: 1.1rem solid ${Colors.jetGray};
+		border-left: 1.1rem solid transparent;
+		border-right: 1.1rem solid transparent;
+		border-radius: 0.3rem 0.3rem 0.15rem 0;
+		transform: rotate(-90deg);
+	}
+`;
+
+export const SidebarBottomLink = styled.li`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.5rem;
+
+	&:not(:last-child) {
+		border-bottom: 1px solid ${Colors.lightCoolGray};
+	}
+`;
+
+export const ProfileNameText = styled.span`
+	font-size: 1.5rem;
+	text-transform: capitalize;
+	max-width: 14rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 `;
