@@ -1,12 +1,18 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
-import * as styled from "./styles/orderReceived";
+import * as styled from "./styles";
 
-const orderReceived = () => {
+export default function AccountCreated() {
+	const { state } = useLocation();
+
+	if (!state) {
+		return <div />;
+	}
+
 	return (
-		<styled.OrderReceivedWrapper>
-			<styled.OrderReceivedContainer>
-				<styled.ReceivedIcon
+		<styled.Wrapper>
+			<styled.Container>
+				<styled.Icon
 					width="94"
 					height="98"
 					viewBox="0 0 94 98"
@@ -53,23 +59,16 @@ const orderReceived = () => {
 						d="M71.2335 2.83778C70.478 2.0226 70.7916 0.52665 71.811 0.0828713C72.2965 -0.128477 73.2698 0.084101 73.7101 0.497662C74.0321 0.800015 74.1242 1.0718 74.1242 1.71867C74.1242 2.43933 74.0488 2.61431 73.5618 3.02418C72.8398 3.6317 71.8995 3.5565 71.2335 2.83778Z"
 						fill="#F47F16"
 					/>
-				</styled.ReceivedIcon>
-				<styled.ReceivedHeadText>
-					Thank you for your purchase
-				</styled.ReceivedHeadText>
-				<styled.ReceivedSubText>
-					We've received your order and will delivery in 5-7 business days once
-					we confirm payment.
-				</styled.ReceivedSubText>
-				<styled.ReceivedSubText>
-					Your order number is #1234
-				</styled.ReceivedSubText>
+				</styled.Icon>
+				<styled.HeadText>Account Created Successfully</styled.HeadText>
+				<styled.SubText>
+					Your Venergie account has now been created. Please click on the
+					confirmation link we sent to your email <b>{state?.email}</b>
+				</styled.SubText>
 				<Link to="/">
 					<b>Go back to shop</b>
 				</Link>
-			</styled.OrderReceivedContainer>
-		</styled.OrderReceivedWrapper>
+			</styled.Container>
+		</styled.Wrapper>
 	);
-};
-
-export default orderReceived;
+}

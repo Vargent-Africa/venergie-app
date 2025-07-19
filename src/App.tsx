@@ -11,19 +11,23 @@ import DashboardLayout from "./components/layouts/User";
 import Loader from "components/misc/Loader";
 
 //Auth
-const Login = lazy(() => import("containers/Auth/login"));
-const Signup = lazy(() => import("containers/Auth/signup"));
+const Login = lazy(() => import("containers/Auth/Login"));
+const Signup = lazy(() => import("containers/Auth/Signup"));
 
 //Items
-const ItemLists = lazy(() => import("containers/Items/itemList"));
-const Item = lazy(() => import("containers/Items/item"));
-const Checkout = lazy(() => import("containers/Items/checkout"));
-const OrderReceived = lazy(() => import("containers/Items/orderReceived"));
+const ItemLists = lazy(() => import("containers/Items/ItemList"));
+const Item = lazy(() => import("containers/Items/Item"));
+const Checkout = lazy(() => import("containers/Items/Checkout"));
+const OrderReceived = lazy(() => import("containers/Items/OrderReceived"));
 
 //Dashboard
-const Dashboard = lazy(() => import("containers/Dashboard/dashboard"));
-const OrderHistory = lazy(() => import("containers/Orders/orderHistory"));
-const Profile = lazy(() => import("containers/Profile/profile"));
+const Dashboard = lazy(() => import("containers/Dashboard/Dashboard"));
+const OrderHistory = lazy(() => import("containers/Orders/OrderHistory"));
+const Profile = lazy(() => import("containers/Profile/Profile"));
+
+// Info
+import AccountCreated from "containers/Info/AccountCreated";
+import NotFound from "containers/Info/NotFound";
 
 const App = () => {
 	return (
@@ -106,6 +110,15 @@ const App = () => {
 							</Suspense>
 						}
 					/>
+					<Route
+						path="account-successful"
+						element={
+							<Suspense fallback={<Loader />}>
+								<AccountCreated />
+							</Suspense>
+						}
+					/>
+					<Route path="*" element={<NotFound />} />
 				</Route>
 			</Route>
 		</Routes>

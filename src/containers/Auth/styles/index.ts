@@ -18,8 +18,8 @@ export const FormWrapper = styled.div`
 `;
 
 export const Form = styled.form`
-	/* max-width: 45rem; */
-	/* min-width: 42rem; */
+	width: 100%;
+	max-width: 45rem;
 	padding: 4.4rem 2rem;
 	border-radius: 6px;
 	background-color: ${Colors.white};
@@ -70,9 +70,9 @@ const spin = keyframes`
   }
 `;
 
-export const BtnContentIcon = styled.svg<{ spinning?: boolean }>`
-	${({ spinning }) =>
-		spinning
+export const BtnContentIcon = styled.svg<{ $spinning?: boolean }>`
+	${({ $spinning }) =>
+		$spinning
 			? css`
 					display: inline-block;
 					animation: ${spin} 1s linear infinite;
@@ -117,11 +117,26 @@ export const SignupLink = styled.span`
 
 export const FormContainer = styled.div`
 	display: flex;
-	align-items: center;
 	gap: 1rem;
 	margin-top: 1.5rem;
 
 	@media (max-width: ${Sizes.md}) {
 		display: block;
 	}
+`;
+
+export const InputIconWrapper = styled.div`
+	width: 4.8rem;
+	cursor: pointer;
+	position: absolute;
+	top: 2rem;
+	right: 1px;
+	background-color: ${Colors.lightGrayBlue};
+`;
+
+export const InputIcon = styled.svg`
+	width: 2rem;
+	height: 2rem;
+	display: block;
+	margin: 0 auto;
 `;
