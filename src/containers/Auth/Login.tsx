@@ -1,16 +1,88 @@
-import { Link, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
 
 import FormText from "components/forms/input/Text";
 import CheckBox from "components/forms/checkbox";
+import useAuth from "hooks/useAuth";
 
 import * as styled from "./styles";
+import { currentUser, signIn } from "api/users";
+import { toast } from "react-toastify";
+
+type LoginInput = {
+	uemail: string;
+	upassword: string;
+	showPassword: boolean;
+};
 
 const Login = () => {
+	const { persist, setAuth, setPersist } = useAuth();
 	const navigate = useNavigate();
+	const location = useLocation();
+	const from = location.state?.from?.pathname || "/dashboard";
 
-	const navigateToDash = () => {
-		navigate("/dashboard");
+	const [formData, setFormData] = useState<LoginInput>({
+		uemail: "",
+		upassword: "",
+		showPassword: false,
+	});
+
+	const { uemail, upassword, showPassword } = formData;
+
+	const {
+		isPending,
+		mutate: loginUser,
+		data: loginData,
+	} = useMutation({
+		mutationFn: signIn,
+		onError: (err) => {
+			if (isAxiosError(err)) {
+				toast.error(err.response?.data.message);
+			} else {
+				console.log("unexpected", err);
+			}
+		},
+	});
+
+	const toggleViewPass = () => {
+		setFormData((prev) => ({ ...prev, showPassword: !prev.showPassword }));
 	};
+
+	useQuery({
+		queryKey: ["current-user"],
+		queryFn: () => currentUser(),
+		onSuccess: (data) => {
+			setAuth(data);
+			navigate(from, { replace: true });
+			toast.success("Login successful");
+		},
+		enabled: !!loginData,
+	});
+
+	const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({ ...prev, [name]: value }));
+	};
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const loginInput = {
+			email: uemail,
+			password: upassword,
+		};
+		loginUser(loginInput);
+	};
+
+	const togglePersist = () => {
+		setPersist((prev) => !prev);
+	};
+
+	useEffect(() => {
+		localStorage.setItem("persist", JSON.stringify(persist));
+	}, [persist]);
+
 	return (
 		<styled.AuthWrapper>
 			<styled.FormWrapper>
