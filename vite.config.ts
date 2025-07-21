@@ -12,7 +12,9 @@ export default defineConfig({
 			assets: `${__dirname}/src/assets`,
 			utils: `${__dirname}/src/utils`,
 			contexts: `${__dirname}/src/contexts`,
+			api: `${__dirname}/src/api`,
+			hooks: `${__dirname}/src/hooks`,
 		},
 	},
-	envPrefix: "APP_",
+	envPrefix: "VG_",
 });

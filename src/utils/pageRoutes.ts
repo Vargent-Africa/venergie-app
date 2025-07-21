@@ -5,8 +5,12 @@ const PageRoutes = {
 	profile: "/profile",
 
 	// Main routes
+	itemLists: "/",
 	checkout: "/items/checkout",
 	orderReceived: "/items/order-received",
+
+	// Auth routes
+	login: "/auth/login",
 };
 
 export default PageRoutes;

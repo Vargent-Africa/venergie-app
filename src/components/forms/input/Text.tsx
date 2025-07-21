@@ -1,15 +1,9 @@
-import React from "react";
+import { useState } from "react";
 
 import * as styled from "./styles/text";
 
-type FormInputProps = React.ComponentProps<"input"> & {
-	label?: string;
-	errorMessage?: string;
-	showLabel?: boolean;
-	hasError?: boolean;
-};
-
 const FormText = (props: FormInputProps) => {
+	const [focused, setFocused] = useState<boolean>(false);
 	const {
 		label,
 		errorMessage,
@@ -17,15 +11,34 @@ const FormText = (props: FormInputProps) => {
 		hasError = false,
 		required = false,
 		disabled = false,
+		showPassword = false,
+		rightIcon = null,
+		blurFun,
 		...inputProps
 	} = props;
+
+	const handleFocus = () => {
+		setFocused(true);
+		blurFun && blurFun();
+	};
 
 	return (
 		<styled.Wrapper>
 			{showLabel && (
 				<styled.FormLabel required={required}>{label}</styled.FormLabel>
 			)}
-			<styled.Input {...inputProps} disabled={disabled} required={required} />
+			<styled.InputWrapper>
+				<styled.Input
+					{...inputProps}
+					disabled={disabled}
+					required={required}
+					onBlur={handleFocus}
+					data-focused={focused.toString()}
+					data-haserror={hasError.toString()}
+				/>
+				{rightIcon && rightIcon}
+				{errorMessage && <styled.InputError>{errorMessage}</styled.InputError>}
+			</styled.InputWrapper>
 		</styled.Wrapper>
 	);
 };

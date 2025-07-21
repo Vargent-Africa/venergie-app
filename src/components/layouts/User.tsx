@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
-import { Outlet, Link } from "react-router";
+import { Outlet, Link, Navigate, useLocation } from "react-router";
 
 import NavLinks from "components/navigation/NavLinks";
 import Avatar from "components/misc/Avatar/Avatar";
+import useAuth from "hooks/useAuth";
+import { useLogout } from "hooks/useLogout";
 
 import * as styled from "./styles/user";
 
@@ -10,6 +12,9 @@ const DashboardLayoutPush = () => {
 	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	const [isOpen, setIsOpen] = useState(false);
+	const { authUser } = useAuth();
+	const location = useLocation();
+	const { mutate: logOutUser } = useLogout();
 
 	const handleShow = () => {
 		menuRef.current?.classList.toggle("toggle");
@@ -23,6 +28,8 @@ const DashboardLayoutPush = () => {
 			handleShow();
 		}
 	};
+
+	if (!authUser) return <Navigate to="/" state={{ from: location }} replace />;
 
 	return (
 		<styled.UserLayoutWrapper>
@@ -118,7 +125,7 @@ const DashboardLayoutPush = () => {
 							</styled.ProfileNameText>
 						</styled.SidebarBottomLink>
 						<styled.SidebarBottomLink
-							onClick={() => {}}
+							onClick={() => logOutUser()}
 							className="flex items-center space-x-2 px-3 py-2 w-full"
 						>
 							<styled.SidebarIcon
