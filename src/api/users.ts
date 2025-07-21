@@ -12,3 +12,7 @@ export function signIn(input: Login): Promise<MessageResponse> {
 export function currentUser(): Promise<User> {
 	return getData("/auth/profile");
 }
+
+export function signOut(): Promise<MessageResponse> {
+	return postData("/auth/logout", {});
+}

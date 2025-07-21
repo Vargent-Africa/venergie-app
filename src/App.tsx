@@ -60,65 +60,66 @@ const App = () => {
 							}
 						/>
 					</Route>
-				</Route>
-				<Route element={<MainLayout />}>
-					<Route
-						path="/"
-						element={
-							<Suspense fallback={<Loader />}>
-								<ItemLists />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="items/:id"
-						element={
-							<Suspense fallback={<Loader />}>
-								<Item />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="items/checkout"
-						element={
-							<Suspense fallback={<Loader />}>
-								<Checkout />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="items/order-received"
-						element={
-							<Suspense fallback={<Loader />}>
-								<OrderReceived />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="auth/login"
-						element={
-							<Suspense fallback={<Loader />}>
-								<Login />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="auth/signup"
-						element={
-							<Suspense fallback={<Loader />}>
-								<Signup />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="account-successful"
-						element={
-							<Suspense fallback={<Loader />}>
-								<AccountCreated />
-							</Suspense>
-						}
-					/>
-					<Route path="*" element={<NotFound />} />
+
+					<Route element={<MainLayout />}>
+						<Route
+							path="/"
+							element={
+								<Suspense fallback={<Loader />}>
+									<ItemLists />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="items/:id"
+							element={
+								<Suspense fallback={<Loader />}>
+									<Item />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="items/checkout"
+							element={
+								<Suspense fallback={<Loader />}>
+									<Checkout />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="items/order-received"
+							element={
+								<Suspense fallback={<Loader />}>
+									<OrderReceived />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="auth/login"
+							element={
+								<Suspense fallback={<Loader />}>
+									<Login />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="auth/signup"
+							element={
+								<Suspense fallback={<Loader />}>
+									<Signup />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="account-successful"
+							element={
+								<Suspense fallback={<Loader />}>
+									<AccountCreated />
+								</Suspense>
+							}
+						/>
+						<Route path="*" element={<NotFound />} />
+					</Route>
 				</Route>
 			</Route>
 		</Routes>

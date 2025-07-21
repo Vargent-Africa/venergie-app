@@ -26,10 +26,8 @@ const apiFile = axios.create({
 api.interceptors.response.use(
 	(res) => res,
 	(err) => {
-		if (err.response.status === 401) {
-			if (window.location.pathname !== "/") {
-				window.location.replace("/");
-			}
+		if (err.response?.status === 401) {
+			console.clear();
 		}
 		return Promise.reject(err);
 	}

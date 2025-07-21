@@ -13,6 +13,7 @@ export default defineConfig({
 			utils: `${__dirname}/src/utils`,
 			contexts: `${__dirname}/src/contexts`,
 			api: `${__dirname}/src/api`,
+			hooks: `${__dirname}/src/hooks`,
 		},
 	},
 	envPrefix: "VG_",

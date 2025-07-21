@@ -2,6 +2,9 @@ import { useRef } from "react";
 import { Link, Outlet } from "react-router";
 
 import { useCart } from "contexts/cartContext";
+import useAuth from "hooks/useAuth";
+import PageRoutes from "utils/pageRoutes";
+
 import * as common from "styles/ui";
 
 import * as styled from "./styles/main";
@@ -10,6 +13,7 @@ const MainLayout = () => {
 	const barRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
 	const { showCart } = useCart();
+	const { authUser } = useAuth();
 
 	const handleShowMenu = () => {
 		menuRef.current?.classList.toggle("show");
@@ -45,16 +49,19 @@ const MainLayout = () => {
 										<styled.StyledLink>Shop</styled.StyledLink>
 									</Link>
 								</styled.NavLink>
-								<styled.NavLink>
-									<Link to="/">
-										<styled.StyledLink>Profile</styled.StyledLink>
-									</Link>
-								</styled.NavLink>
-								<styled.NavLink>
-									<Link to="/dashboard">
-										<styled.StyledLink>Dashboard</styled.StyledLink>
-									</Link>
-								</styled.NavLink>
+								{authUser ? (
+									<styled.NavLink>
+										<Link to={PageRoutes.dashboard}>
+											<styled.StyledLink>Dashboard</styled.StyledLink>
+										</Link>
+									</styled.NavLink>
+								) : (
+									<styled.NavLink>
+										<Link to={PageRoutes.login}>
+											<styled.StyledLink>Login</styled.StyledLink>
+										</Link>
+									</styled.NavLink>
+								)}
 							</styled.MainNavLinks>
 						</styled.MainNavLinksContainer>
 						<styled.CartIconWrapper onClick={showCart}>
