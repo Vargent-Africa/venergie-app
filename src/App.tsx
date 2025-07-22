@@ -4,8 +4,10 @@ import { Routes, Route } from "react-router";
 //Layouts
 import RootLayout from "components/layouts/Root";
 import MainLayout from "components/layouts/Main";
-import Persist from "./components/layouts/Persist";
+// import Persist from "./components/layouts/Persist";
 import DashboardLayout from "./components/layouts/User";
+import AuthLayout from "./components/layouts/Auth";
+import { ProtectedRoute } from "components/layouts/ProtectedRoute";
 
 //Misc
 import Loader from "components/misc/Loader";
@@ -32,8 +34,8 @@ import NotFound from "containers/Info/NotFound";
 const App = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<RootLayout />}>
-				<Route element={<Persist />}>
+			<Route element={<RootLayout />}>
+				<Route element={<ProtectedRoute />}>
 					<Route element={<DashboardLayout />}>
 						<Route
 							path="dashboard"
@@ -60,40 +62,41 @@ const App = () => {
 							}
 						/>
 					</Route>
-
-					<Route element={<MainLayout />}>
-						<Route
-							path="/"
-							element={
-								<Suspense fallback={<Loader />}>
-									<ItemLists />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="items/:id"
-							element={
-								<Suspense fallback={<Loader />}>
-									<Item />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="items/checkout"
-							element={
-								<Suspense fallback={<Loader />}>
-									<Checkout />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="items/order-received"
-							element={
-								<Suspense fallback={<Loader />}>
-									<OrderReceived />
-								</Suspense>
-							}
-						/>
+				</Route>
+				<Route element={<MainLayout />}>
+					<Route
+						path="/"
+						element={
+							<Suspense fallback={<Loader />}>
+								<ItemLists />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="items/:id"
+						element={
+							<Suspense fallback={<Loader />}>
+								<Item />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="items/checkout"
+						element={
+							<Suspense fallback={<Loader />}>
+								<Checkout />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="items/order-received"
+						element={
+							<Suspense fallback={<Loader />}>
+								<OrderReceived />
+							</Suspense>
+						}
+					/>
+					<Route element={<AuthLayout />}>
 						<Route
 							path="auth/login"
 							element={
@@ -118,8 +121,8 @@ const App = () => {
 								</Suspense>
 							}
 						/>
-						<Route path="*" element={<NotFound />} />
 					</Route>
+					<Route path="*" element={<NotFound />} />
 				</Route>
 			</Route>
 		</Routes>

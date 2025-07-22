@@ -31,9 +31,9 @@ const spin = keyframes`
   }
 `;
 
-export const BtnContentIcon = styled.svg<{ spinning?: boolean }>`
-	${({ spinning }) =>
-		spinning
+export const BtnContentIcon = styled.svg<{ $spinning?: boolean }>`
+	${({ $spinning }) =>
+		$spinning
 			? css`
 					display: inline-block;
 					animation: ${spin} 1s linear infinite;

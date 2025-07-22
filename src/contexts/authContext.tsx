@@ -1,22 +1,25 @@
-import React, { createContext, useState } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { User } from "api/types/user";
+import { currentUser } from "api/users";
 
-export interface IAuthContext {
+export type AuthContextType = {
 	authUser: User | null;
 	persist: boolean;
-	setAuth: React.Dispatch<React.SetStateAction<User | null>>;
+	setUser: React.Dispatch<React.SetStateAction<User | null>>;
 	setPersist: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-type AuthContextProps = {
-	children: React.ReactNode;
 };
 
-const AuthContext = createContext({} as IAuthContext);
+const AuthContext = createContext<AuthContextType>({
+	authUser: null,
+	persist: false,
+	setUser: () => {},
+	setPersist: () => {},
+});
 
-export const AuthContextProvider = ({ children }: AuthContextProps) => {
-	const [authUser, setAuth] = useState<User | null>(null);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+	const [authUser, setUser] = useState<User | null>(null);
 	const [persist, setPersist] = useState<boolean>(() => {
 		const getPersist: string | null = JSON.parse(
 			localStorage.getItem("persist") || "null"
@@ -25,11 +28,26 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
 		return true;
 	});
 
+	// Fetch current user only if user is null
+	const { data, isSuccess, isLoading } = useQuery({
+		queryKey: ["current-user"],
+		queryFn: currentUser,
+		enabled: authUser === null, // don't refetch if already set
+		retry: false,
+		staleTime: 0,
+	});
+
+	useEffect(() => {
+		if (isSuccess && data) {
+			setUser(data);
+		}
+	}, [isSuccess, data]);
+
 	return (
-		<AuthContext.Provider value={{ authUser, persist, setAuth, setPersist }}>
-			{children}
+		<AuthContext.Provider value={{ authUser, persist, setUser, setPersist }}>
+			{isLoading ? <div>Loading...</div> : children}
 		</AuthContext.Provider>
 	);
 };
 
-export default AuthContext;
+export const useAuth = () => useContext(AuthContext);

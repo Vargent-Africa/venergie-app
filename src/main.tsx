@@ -7,7 +7,7 @@ import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { CartProvider } from "contexts/cartContext";
-import { AuthContextProvider } from "contexts/authContext.tsx";
+import { AuthProvider } from "contexts/authContext.tsx";
 import { GlobalStyle } from "styles";
 
 import App from "./App.tsx";
@@ -28,24 +28,24 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<BrowserRouter>
-			<QueryClientProvider client={queryClient}>
-				<GlobalStyle />
-				<AuthContextProvider>
+		<QueryClientProvider client={queryClient}>
+			<AuthProvider>
+				<BrowserRouter>
+					<GlobalStyle />
 					<CartProvider>
 						<Routes>
 							<Route path="/*" element={<App />} />
 						</Routes>
 					</CartProvider>
-				</AuthContextProvider>
-				<ToastContainer
-					theme="dark"
-					position="top-right"
-					hideProgressBar={false}
-					transition={Zoom}
-				/>
-				<ReactQueryDevtools />
-			</QueryClientProvider>
-		</BrowserRouter>
+					<ToastContainer
+						theme="dark"
+						position="top-right"
+						hideProgressBar={false}
+						transition={Zoom}
+					/>
+					<ReactQueryDevtools />
+				</BrowserRouter>
+			</AuthProvider>
+		</QueryClientProvider>
 	</StrictMode>
 );

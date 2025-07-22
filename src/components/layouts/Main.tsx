@@ -2,7 +2,8 @@ import { useRef } from "react";
 import { Link, Outlet } from "react-router";
 
 import { useCart } from "contexts/cartContext";
-import useAuth from "hooks/useAuth";
+import { useAuth } from "contexts/authContext";
+
 import PageRoutes from "utils/pageRoutes";
 
 import * as common from "styles/ui";
@@ -29,6 +30,8 @@ const MainLayout = () => {
 		}
 	};
 
+	// console.log("authUser", authUser);
+
 	return (
 		<styled.MainWrapper>
 			<styled.MainHeader>
@@ -49,16 +52,16 @@ const MainLayout = () => {
 										<styled.StyledLink>Shop</styled.StyledLink>
 									</Link>
 								</styled.NavLink>
-								{authUser ? (
+								{authUser === null ? (
 									<styled.NavLink>
-										<Link to={PageRoutes.dashboard}>
-											<styled.StyledLink>Dashboard</styled.StyledLink>
+										<Link to={PageRoutes.login}>
+											<styled.StyledLink>Login</styled.StyledLink>
 										</Link>
 									</styled.NavLink>
 								) : (
 									<styled.NavLink>
-										<Link to={PageRoutes.login}>
-											<styled.StyledLink>Login</styled.StyledLink>
+										<Link to={PageRoutes.dashboard}>
+											<styled.StyledLink>Dashboard</styled.StyledLink>
 										</Link>
 									</styled.NavLink>
 								)}
