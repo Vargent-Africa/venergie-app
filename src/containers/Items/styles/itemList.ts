@@ -63,4 +63,7 @@ export const ListItemPrice = styled.span`
 	display: block;
 	font-size: 2rem;
 	font-weight: 500;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 `;

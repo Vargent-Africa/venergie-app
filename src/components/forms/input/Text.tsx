@@ -2,6 +2,16 @@ import { useState } from "react";
 
 import * as styled from "./styles/text";
 
+type FormInputProps = React.ComponentProps<"input"> & {
+	label?: string;
+	errorMessage?: string;
+	showLabel?: boolean;
+	hasError?: boolean;
+	showPassword?: boolean;
+	rightIcon?: React.JSX.Element | null;
+	blurFun?: () => void;
+};
+
 const FormText = (props: FormInputProps) => {
 	const [focused, setFocused] = useState<boolean>(false);
 	const {
