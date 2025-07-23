@@ -7,7 +7,7 @@ import { signOut } from "api/users";
 import { useAuth } from "contexts/authContext";
 
 export const useLogout = () => {
-	const { setUser } = useAuth();
+	const { setUser, setIsAuthenticated } = useAuth();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
@@ -15,6 +15,7 @@ export const useLogout = () => {
 		mutationFn: signOut,
 		onSuccess: () => {
 			setUser(null);
+			setIsAuthenticated(false);
 			queryClient.removeQueries({ queryKey: ["current-user"] });
 			navigate("/", { replace: true });
 			toast.success("Logout successful");

@@ -5,7 +5,6 @@ import { useCart } from "contexts/cartContext";
 import { useAuth } from "contexts/authContext";
 
 import PageRoutes from "utils/pageRoutes";
-
 import * as common from "styles/ui";
 
 import * as styled from "./styles/main";
@@ -14,7 +13,7 @@ const MainLayout = () => {
 	const barRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
 	const { showCart } = useCart();
-	const { authUser } = useAuth();
+	const { isAuthenticated } = useAuth();
 
 	const handleShowMenu = () => {
 		menuRef.current?.classList.toggle("show");
@@ -52,16 +51,16 @@ const MainLayout = () => {
 										<styled.StyledLink>Shop</styled.StyledLink>
 									</Link>
 								</styled.NavLink>
-								{authUser === null ? (
+								{isAuthenticated ? (
 									<styled.NavLink>
-										<Link to={PageRoutes.login}>
-											<styled.StyledLink>Login</styled.StyledLink>
+										<Link to={PageRoutes.dashboard}>
+											<styled.StyledLink>Dashboard</styled.StyledLink>
 										</Link>
 									</styled.NavLink>
 								) : (
 									<styled.NavLink>
-										<Link to={PageRoutes.dashboard}>
-											<styled.StyledLink>Dashboard</styled.StyledLink>
+										<Link to={PageRoutes.login}>
+											<styled.StyledLink>Login</styled.StyledLink>
 										</Link>
 									</styled.NavLink>
 								)}

@@ -3,6 +3,8 @@ import { Navigate, Outlet } from "react-router";
 import PageRoutes from "utils/pageRoutes";
 
 export const ProtectedRoute = () => {
-	const { authUser } = useAuth();
+	const { authUser, isLoading } = useAuth();
+
+	if (isLoading) return <div>Loading...</div>;
 	return authUser ? <Outlet /> : <Navigate to={PageRoutes.itemLists} replace />;
 };

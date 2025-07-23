@@ -19,7 +19,7 @@ type LoginInput = {
 };
 
 const Login = () => {
-	const { persist, setUser, setPersist } = useAuth();
+	const { persist, setIsAuthenticated, setUser, setPersist } = useAuth();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const location = useLocation();
@@ -38,6 +38,7 @@ const Login = () => {
 		onSuccess: async () => {
 			const user = await currentUser();
 			setUser(user);
+			setIsAuthenticated(true);
 			queryClient.setQueryData(["current-user"], user);
 			navigate(from, { replace: true });
 			toast.success("Login successful");

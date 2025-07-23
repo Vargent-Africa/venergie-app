@@ -10,7 +10,6 @@ export function signIn(input: Login): Promise<MessageResponse> {
 }
 
 export function currentUser(): Promise<User> {
-	console.log("user api");
 	return getData("/auth/profile");
 }
 

@@ -27,21 +27,15 @@ const apiFile = axios.create({
 api.interceptors.response.use(
 	(res) => res,
 	(err) => {
-		// console.log("qswwewedw", err);
-
-		// if (err.response?.status === 401) {
-		// 	console.clear();
-		// }
+		if (err.response?.status === 401) {
+			console.clear();
+		}
 		return Promise.reject(err);
 	}
 );
 
-export const getData = async (url: string, controller?: AbortController) => {
-	const { data } = await api.get(url, {
-		signal: controller?.signal,
-	});
-	console.log("dataaa", data);
-
+export const getData = async (url: string) => {
+	const { data } = await api.get(url);
 	return data;
 };
 
