@@ -1,5 +1,5 @@
-import { Fragment, useRef } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Fragment } from "react";
+import { Link } from "react-router";
 import { toast } from "react-toastify";
 
 import { useItemList } from "hooks/useItemList";
@@ -7,31 +7,16 @@ import Loader from "components/misc/Loader";
 import EmptyState from "components/misc/EmptyState";
 import Pagination from "components/navigation/Pagination";
 import { numberFormat } from "utils/helpers";
+import { usePaginationQuery } from "hooks/usePaginationQuery";
 
 import * as common from "styles/ui";
 
 import * as styled from "./styles/itemList";
 
 const ItemList = () => {
-	const [searchParams, setSearchParams] = useSearchParams();
-
-	const query = searchParams.get("query") || "";
-	const page = searchParams.get("page") || "1";
-	const limit = searchParams.get("limit") || "50";
-
-	const ref = useRef<HTMLInputElement>(null);
-
-	const changePage = (num: number) => {
-		const nextParams: Record<string, string> = {
-			page: num.toString(),
-		};
-
-		if (query) {
-			nextParams.query = ref.current?.value || "";
-		}
-
-		setSearchParams(nextParams);
-	};
+	const { query, page, limit, changePage } = usePaginationQuery({
+		defaultLimit: "50",
+	});
 
 	const {
 		isLoading,
