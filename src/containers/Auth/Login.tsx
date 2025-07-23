@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 
 import FormText from "components/forms/input/Text";
 import CheckBox from "components/forms/checkbox";
-import useAuth from "hooks/useAuth";
 import PageRoutes from "utils/pageRoutes";
 import { currentUser, signIn } from "api/users";
+import { useAuth } from "contexts/authContext";
 
 import * as styled from "./styles";
 
@@ -19,8 +19,9 @@ type LoginInput = {
 };
 
 const Login = () => {
-	const { persist, setAuth, setPersist } = useAuth();
+	const { persist, setIsAuthenticated, setUser, setPersist } = useAuth();
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 	const location = useLocation();
 	const from = location.state?.from?.pathname || PageRoutes.itemLists;
 
@@ -32,12 +33,16 @@ const Login = () => {
 
 	const { email, password, showPassword } = formData;
 
-	const {
-		isPending,
-		mutate: loginUser,
-		data: loginData,
-	} = useMutation({
+	const { isPending, mutate: loginUser } = useMutation({
 		mutationFn: signIn,
+		onSuccess: async () => {
+			const user = await currentUser();
+			setUser(user);
+			setIsAuthenticated(true);
+			queryClient.setQueryData(["current-user"], user);
+			navigate(from, { replace: true });
+			toast.success("Login successful");
+		},
 		onError: (err) => {
 			if (isAxiosError(err)) {
 				toast.error(err.response?.data.message);
@@ -50,12 +55,6 @@ const Login = () => {
 	const toggleViewPass = () => {
 		setFormData((prev) => ({ ...prev, showPassword: !prev.showPassword }));
 	};
-
-	const { data: userData, isSuccess } = useQuery({
-		queryKey: ["current-user"],
-		queryFn: currentUser,
-		enabled: !!loginData,
-	});
 
 	const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -71,14 +70,6 @@ const Login = () => {
 	const togglePersist = () => {
 		setPersist((prev) => !prev);
 	};
-
-	useEffect(() => {
-		if (isSuccess && userData) {
-			setAuth(userData);
-			navigate(from, { replace: true });
-			toast.success("Login successful");
-		}
-	}, [isSuccess, userData]);
 
 	useEffect(() => {
 		localStorage.setItem("persist", JSON.stringify(persist));

@@ -2,34 +2,34 @@ import { useEffect } from "react";
 import { Outlet } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 
-import useAuth from "hooks/useAuth";
 import { currentUser } from "api/users";
+import { useAuth } from "contexts/authContext";
 
 const Persist = () => {
-	const { authUser, setAuth } = useAuth();
+	const { authUser, persist, setUser } = useAuth();
 
 	const {
 		data: userData,
+		isLoading,
 		isSuccess,
 		isError,
 	} = useQuery({
 		queryKey: ["current-user"],
 		queryFn: currentUser,
 		enabled: authUser === null,
-		retry: false,
 	});
 
 	// Set auth only once after successful query
 	useEffect(() => {
 		if (isSuccess && userData) {
-			setAuth(userData);
+			setUser(userData);
 		}
 		if (isError) {
-			setAuth(null);
+			setUser(null);
 		}
-	}, [isSuccess, isError, userData, setAuth]);
+	}, [isSuccess, isError, userData]);
 
-	return <Outlet />;
+	return !persist ? <Outlet /> : isLoading ? <div>Loading...</div> : <Outlet />;
 };
 
 export default Persist;

@@ -4,21 +4,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 
 import { signOut } from "api/users";
-
-import useAuth from "./useAuth";
+import { useAuth } from "contexts/authContext";
 
 export const useLogout = () => {
-	const { setAuth } = useAuth();
+	const { setUser, setIsAuthenticated } = useAuth();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
 	return useMutation({
 		mutationFn: signOut,
 		onSuccess: () => {
-			setAuth(null);
+			setUser(null);
+			setIsAuthenticated(false);
+			queryClient.removeQueries({ queryKey: ["current-user"] });
 			navigate("/", { replace: true });
 			toast.success("Logout successful");
-			queryClient.setQueryData(["current-user"], null);
 		},
 		onError: (err) => {
 			if (isAxiosError(err)) {

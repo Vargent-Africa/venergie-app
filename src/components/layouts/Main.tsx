@@ -2,9 +2,9 @@ import { useRef } from "react";
 import { Link, Outlet } from "react-router";
 
 import { useCart } from "contexts/cartContext";
-import useAuth from "hooks/useAuth";
-import PageRoutes from "utils/pageRoutes";
+import { useAuth } from "contexts/authContext";
 
+import PageRoutes from "utils/pageRoutes";
 import * as common from "styles/ui";
 
 import * as styled from "./styles/main";
@@ -13,7 +13,7 @@ const MainLayout = () => {
 	const barRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
 	const { showCart } = useCart();
-	const { authUser } = useAuth();
+	const { isAuthenticated } = useAuth();
 
 	const handleShowMenu = () => {
 		menuRef.current?.classList.toggle("show");
@@ -28,6 +28,8 @@ const MainLayout = () => {
 			barRef.current?.classList.remove("toggle");
 		}
 	};
+
+	// console.log("authUser", authUser);
 
 	return (
 		<styled.MainWrapper>
@@ -49,7 +51,7 @@ const MainLayout = () => {
 										<styled.StyledLink>Shop</styled.StyledLink>
 									</Link>
 								</styled.NavLink>
-								{authUser ? (
+								{isAuthenticated ? (
 									<styled.NavLink>
 										<Link to={PageRoutes.dashboard}>
 											<styled.StyledLink>Dashboard</styled.StyledLink>
