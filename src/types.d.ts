@@ -9,14 +9,18 @@ declare global {
 		msg: string;
 	};
 
-	type FormInputProps = React.ComponentProps<"input"> & {
-		label?: string;
-		errorMessage?: string;
-		showLabel?: boolean;
-		hasError?: boolean;
-		showPassword?: boolean;
-		rightIcon?: React.JSX.Element | null;
-		blurFun?: () => void;
+	type PaginationResult<T> = {
+		page: number;
+		pages: number;
+		limit: number;
+		total?: number;
+		data: T[];
+	};
+
+	type PaginationOptions = {
+		page?: number;
+		limit?: number;
+		query?: string;
 	};
 }
 
