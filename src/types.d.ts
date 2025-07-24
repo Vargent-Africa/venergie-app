@@ -22,6 +22,14 @@ declare global {
 		limit?: number;
 		query?: string;
 	};
+
+	type CartItem = {
+		itemId: string;
+		itemName: string;
+		quantity: number;
+		unitPrice: number;
+		maxQuantity: number;
+	};
 }
 
 // This line is required to make this a module (avoid isolatedModules error)

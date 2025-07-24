@@ -69,6 +69,7 @@ export const CartBodyContainer = styled.div`
 	max-height: calc(100vh - 25rem);
 	overflow-y: scroll;
 	overflow-x: hidden;
+	padding-bottom: 3rem;
 `;
 
 export const CartItem = styled.div`
@@ -155,11 +156,14 @@ export const CartSummary = styled.div`
 	position: inherit;
 	bottom: 0;
 	width: 100%;
+	background-color: #f2f2ef;
 `;
 
 export const CartSummaryHead = styled.div`
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 1rem;
 	align-items: center;
 	margin: 1rem 0;
 	padding-top: 1.5rem;

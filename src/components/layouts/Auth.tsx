@@ -6,11 +6,7 @@ const AuthLayout = () => {
 	const { authUser } = useAuth();
 	if (authUser) return <Navigate to="/" />;
 
-	return (
-		<main>
-			<Outlet />
-		</main>
-	);
+	return <Outlet />;
 };
 
 export default AuthLayout;

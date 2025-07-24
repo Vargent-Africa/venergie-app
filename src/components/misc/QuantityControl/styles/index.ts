@@ -22,8 +22,25 @@ export const QuantityBtn = styled.button`
 	color: ${Colors.black};
 `;
 
-export const Quantity = styled.span`
-	padding: 0 0.8rem;
+export const Quantity = styled.input.attrs({ type: "number" })`
+	padding: 0.3rem 0.8rem;
+	width: 4rem;
 	text-align: center;
 	font-size: 1.8rem;
+	border: none;
+	background-color: transparent;
+
+	&:focus {
+		outline: none;
+		border: none;
+	}
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	-moz-appearance: textfield;
 `;
