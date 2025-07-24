@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
 
-import { useItemList } from "hooks/useItemList";
+import { useItemList } from "hooks/useItem";
 import Loader from "components/misc/Loader";
 import EmptyState from "components/misc/EmptyState";
 import Pagination from "components/navigation/Pagination";
@@ -51,7 +51,7 @@ const ItemList = () => {
 							<styled.ListItems>
 								{itemsData?.data?.map((item) => (
 									<styled.ListItem key={item.guid}>
-										<Link to="items/1">
+										<Link to={`items/${item.guid}`}>
 											<styled.ListItemImg src="/images/item1.png" />
 											<styled.ListItemDetails>
 												<styled.ListItemName>{item.name}</styled.ListItemName>

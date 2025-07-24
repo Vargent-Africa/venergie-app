@@ -9,3 +9,7 @@ export function getItems({
 }: PaginationOptions): Promise<PaginationResult<Item>> {
 	return getData(`/items?query=${query}&page=${page}&limit=${limit}`);
 }
+
+export function getItem(guid?: string): Promise<Item> {
+	return getData(`/items/${guid}`);
+}
