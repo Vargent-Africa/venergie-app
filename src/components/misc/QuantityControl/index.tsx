@@ -1,4 +1,3 @@
-import { useState } from "react";
 import * as styled from "./styles";
 
 type QuantitySelectorProps = {
@@ -6,21 +5,19 @@ type QuantitySelectorProps = {
 	max: number;
 	initial?: number;
 	id?: string;
+	quantity: number;
 	onChange?: (qty: number, id: string) => void;
 };
 
 const QuantityControl = ({
 	min = 1,
 	max,
-	initial = 1,
 	id = "",
+	quantity,
 	onChange,
 }: QuantitySelectorProps) => {
-	const [quantity, setQuantity] = useState(initial);
-
 	const updateQuantity = (value: number) => {
 		const newQty = Math.min(Math.max(value, min), max);
-		setQuantity(newQty);
 		onChange?.(newQty, id);
 	};
 

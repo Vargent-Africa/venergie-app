@@ -56,7 +56,7 @@ const Item = () => {
 						<styled.QuantityLabel>QUANTITY</styled.QuantityLabel>
 						<QuantityControl
 							max={itemData.quantity}
-							initial={quantity}
+							quantity={quantity}
 							onChange={setQuantity}
 						/>
 					</styled.QuantityContainer>

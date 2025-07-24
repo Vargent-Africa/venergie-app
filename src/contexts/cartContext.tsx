@@ -16,8 +16,6 @@ import EmptyState from "components/misc/EmptyState";
 type CartContextType = {
 	cart: CartItem[];
 	addToCart: (item: CartItem) => void;
-	removeFromCart: (id: string) => void;
-	clearCart: () => void;
 	showCart: () => void;
 	hideCart: () => void;
 };
@@ -86,17 +84,19 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		setCart((prev) => prev.filter((i) => i.itemId !== itemId));
 	};
 
-	const clearCart = () => {
-		setCart([]);
-	};
+	const totalPrice = cart.reduce((sum, item) => {
+		return sum + item.unitPrice * item.quantity;
+	}, 0);
+
+	// const clearCart = () => {
+	// 	setCart([]);
+	// };
 
 	return (
 		<CartContext.Provider
 			value={{
 				cart,
 				addToCart,
-				removeFromCart,
-				clearCart,
 				showCart,
 				hideCart,
 			}}
@@ -111,7 +111,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 							viewBox="0 0 24 24"
 							strokeWidth={1.5}
 							stroke="currentColor"
-							className="size-6"
 						>
 							<styled.HideCartIconPath
 								strokeLinecap="round"
@@ -134,11 +133,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 										<styled.QuantityPriceContainer>
 											<QuantityControl
 												max={ct.maxQuantity}
-												initial={ct.quantity}
+												quantity={ct.quantity}
 												id={ct.itemId}
 												onChange={updateQuantity}
 											/>
-											<styled.CartItemPrice>{`USD ${numberFormat(
+											<styled.CartItemPrice>{`NGN ${numberFormat(
 												ct.unitPrice
 											)}`}</styled.CartItemPrice>
 										</styled.QuantityPriceContainer>
@@ -146,7 +145,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 									<styled.CartItemImageWrapper>
 										<styled.CartItemImage src="/images/item1.png" alt="Item" />
 									</styled.CartItemImageWrapper>
-									<styled.RemoveItem>&#x2715;</styled.RemoveItem>
+									<styled.RemoveItem onClick={() => removeFromCart(ct.itemId)}>
+										&#x2715;
+									</styled.RemoveItem>
 								</styled.CartItem>
 							))
 						)}
@@ -155,7 +156,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 				<styled.CartSummary>
 					<styled.CartSummaryHead>
 						<styled.CartSumTitle>Total</styled.CartSumTitle>
-						<styled.CartSumTotal>USD 5,000</styled.CartSumTotal>
+						<styled.CartSumTotal>
+							{`NGN ${numberFormat(totalPrice)}`}
+						</styled.CartSumTotal>
 					</styled.CartSummaryHead>
 					<styled.BtnCheckout onClick={gotoCheckout}>
 						PROCEED TO CHECKOUT
