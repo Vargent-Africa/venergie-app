@@ -24,8 +24,8 @@ export const PaginationList = styled.ul`
 	font-weight: 400;
 `;
 
-export const PaginationListItem = styled.li<{ active?: boolean }>`
-	display: ${({ active }) => (active ? "none" : "block")};
+export const PaginationListItem = styled.li<{ $active?: boolean }>`
+	display: ${({ $active }) => ($active ? "none" : "block")};
 `;
 
 export const PaginationButtonPlain = styled.button`
@@ -36,9 +36,9 @@ export const PaginationButtonPlain = styled.button`
 `;
 
 export const PaginationButton = styled(PaginationButtonPlain)<{
-	active?: boolean;
+	$active?: boolean;
 }>`
-	background-color: ${({ active }) =>
-		active ? Colors.greenAquaBright : Colors.white};
-	color: ${({ active }) => (active ? Colors.white : Colors.black)};
+	background-color: ${({ $active }) =>
+		$active ? Colors.greenAquaBright : Colors.white};
+	color: ${({ $active }) => ($active ? Colors.white : Colors.black)};
 `;

@@ -25,7 +25,7 @@ const Pagination = ({
 				<styled.PaginationButton
 					onClick={() => changePage(ind + 1)}
 					disabled={page === ind + 1}
-					active={page === ind + 1}
+					$active={page === ind + 1}
 				>
 					{ind + 1}
 				</styled.PaginationButton>
@@ -38,7 +38,7 @@ const Pagination = ({
 				<styled.PaginationButton
 					onClick={() => changePage(startValue + ind + 1)}
 					disabled={page === startValue + ind + 1}
-					active={page === startValue + ind + 1}
+					$active={page === startValue + ind + 1}
 				>
 					{startValue + ind + 1}
 				</styled.PaginationButton>
@@ -108,12 +108,12 @@ const Pagination = ({
 							[...Array(amountLeft)].map((_, ind) => (
 								<styled.PaginationListItem
 									key={startValue + ind + 1}
-									active={pages < startValue + ind + 1}
+									$active={pages < startValue + ind + 1}
 								>
 									<styled.PaginationButton
 										onClick={() => changePage(startValue + ind + 1)}
 										disabled={page === startValue + ind + 1}
-										active={page === startValue + ind + 1}
+										$active={page === startValue + ind + 1}
 									>
 										{startValue + ind + 1}
 									</styled.PaginationButton>

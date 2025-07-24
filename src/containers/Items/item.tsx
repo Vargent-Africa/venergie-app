@@ -10,11 +10,25 @@ import { numberFormat } from "utils/helpers";
 import * as common from "styles/ui";
 
 import * as styled from "./styles/item";
+import { useState } from "react";
 
 const Item = () => {
-	const { showCart } = useCart();
+	const [quantity, setQuantity] = useState(1);
+	const { addToCart, showCart } = useCart();
 	let { id } = useParams();
-	const { isPending, isError, data: ItemData } = useItemDetails(id);
+	const { isPending, isError, data: itemData } = useItemDetails(id);
+
+	const handleAddToCart = (cartItem: CartItem) => {
+		addToCart({
+			itemId: cartItem.itemId,
+			itemName: cartItem.itemName,
+			unitPrice: cartItem.unitPrice,
+			quantity: cartItem.quantity,
+			maxQuantity: cartItem.maxQuantity,
+		});
+
+		showCart();
+	};
 
 	if (isPending) return <Loader />;
 	if (isError) return <NotFound />;
@@ -34,15 +48,30 @@ const Item = () => {
 					</styled.ItemRestImgContainer>
 				</styled.ItemImgContainer>
 				<styled.ItemDetailsContainer>
-					<styled.ItemTitle>{ItemData.name}</styled.ItemTitle>
-					<styled.ItemPrice>{`${ItemData.currency} ${numberFormat(
-						ItemData.price
+					<styled.ItemTitle>{itemData.name}</styled.ItemTitle>
+					<styled.ItemPrice>{`${itemData.currency} ${numberFormat(
+						itemData.price
 					)}`}</styled.ItemPrice>
 					<styled.QuantityContainer>
 						<styled.QuantityLabel>QUANTITY</styled.QuantityLabel>
-						<QuantityControl />
+						<QuantityControl
+							max={itemData.quantity}
+							initial={quantity}
+							onChange={setQuantity}
+						/>
 					</styled.QuantityContainer>
-					<styled.AddCartBtn type="button" onClick={showCart}>
+					<styled.AddCartBtn
+						type="button"
+						onClick={() =>
+							handleAddToCart({
+								itemId: itemData.guid,
+								itemName: itemData.name,
+								quantity,
+								unitPrice: itemData.price,
+								maxQuantity: itemData.quantity,
+							})
+						}
+					>
 						ADD TO CART
 					</styled.AddCartBtn>
 					<styled.ItemDescriptionContainer>
@@ -51,7 +80,7 @@ const Item = () => {
 						</styled.ItemDescriptionTitle>
 						<styled.ItemDescriptionContentWrapper>
 							<styled.ItemDescriptionContent>
-								{ItemData.item_details}
+								{itemData.item_details}
 							</styled.ItemDescriptionContent>
 						</styled.ItemDescriptionContentWrapper>
 					</styled.ItemDescriptionContainer>

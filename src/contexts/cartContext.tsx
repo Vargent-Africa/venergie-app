@@ -1,20 +1,42 @@
-import React, { createContext, useContext, useRef } from "react";
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { useNavigate } from "react-router";
 
 import QuantityControl from "components/misc/QuantityControl";
+import { numberFormat } from "utils/helpers";
 
 import * as styled from "./styles/cartContext";
+import EmptyState from "components/misc/EmptyState";
 
 type CartContextType = {
+	cart: CartItem[];
+	addToCart: (item: CartItem) => void;
+	removeFromCart: (id: string) => void;
+	clearCart: () => void;
 	showCart: () => void;
 	hideCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
+const CART_KEY = "cart-items";
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
+	const [cart, setCart] = useState<CartItem[]>(() => {
+		const stored = localStorage.getItem(CART_KEY);
+		try {
+			return stored ? (JSON.parse(stored) as CartItem[]) : [];
+		} catch {
+			return [];
+		}
+	});
+
 	const cartRef = useRef<HTMLElement | null>(null);
 	const overlayRef = useRef<HTMLDivElement | null>(null);
 	const navigate = useNavigate();
@@ -34,8 +56,51 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		navigate("items/checkout", { replace: true });
 	};
 
+	useEffect(() => {
+		localStorage.setItem(CART_KEY, JSON.stringify(cart));
+	}, [cart]);
+
+	const addToCart = (item: CartItem) => {
+		setCart((prev) => {
+			const existing = prev.find((i) => i.itemId === item.itemId);
+			if (existing) {
+				return prev.map((i) =>
+					i.itemId === item.itemId
+						? { ...i, quantity: i.quantity + item.quantity }
+						: i
+				);
+			}
+			return [...prev, item];
+		});
+	};
+
+	const updateQuantity = (quantity: number, itemId: string) => {
+		setCart((prev) =>
+			prev.map((item) =>
+				item.itemId === itemId ? { ...item, quantity } : item
+			)
+		);
+	};
+
+	const removeFromCart = (itemId: string) => {
+		setCart((prev) => prev.filter((i) => i.itemId !== itemId));
+	};
+
+	const clearCart = () => {
+		setCart([]);
+	};
+
 	return (
-		<CartContext.Provider value={{ showCart, hideCart }}>
+		<CartContext.Provider
+			value={{
+				cart,
+				addToCart,
+				removeFromCart,
+				clearCart,
+				showCart,
+				hideCart,
+			}}
+		>
 			<div className="overlay hide" ref={overlayRef}></div>
 			<styled.CartContainer ref={cartRef}>
 				<styled.CartHead>
@@ -59,70 +124,32 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 				</styled.CartHead>
 				<styled.CartBody>
 					<styled.CartBodyContainer>
-						<styled.CartItem>
-							<styled.CartDetails>
-								<styled.CartItemTitle>
-									Solar inverter Solar inverter Solar inverter Solar inverter
-									Solar inverter
-								</styled.CartItemTitle>
-								<styled.QuantityPriceContainer>
-									<QuantityControl />
-									<styled.CartItemPrice>USD 2,000,100</styled.CartItemPrice>
-								</styled.QuantityPriceContainer>
-							</styled.CartDetails>
-							<styled.CartItemImageWrapper>
-								<styled.CartItemImage src="/images/item1.png" alt="Item" />
-							</styled.CartItemImageWrapper>
-							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
-						</styled.CartItem>
-						<styled.CartItem>
-							<styled.CartDetails>
-								<styled.CartItemTitle>
-									Solar inverter Solar inverter Solar inverter Solar inverter
-									Solar inverter
-								</styled.CartItemTitle>
-								<styled.QuantityPriceContainer>
-									<QuantityControl />
-									<styled.CartItemPrice>USD 2,000</styled.CartItemPrice>
-								</styled.QuantityPriceContainer>
-							</styled.CartDetails>
-							<styled.CartItemImageWrapper>
-								<styled.CartItemImage src="/images/item1.png" alt="Item" />
-							</styled.CartItemImageWrapper>
-							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
-						</styled.CartItem>
-						<styled.CartItem>
-							<styled.CartDetails>
-								<styled.CartItemTitle>
-									Solar inverter Solar inverter Solar inverter Solar inverter
-									Solar inverter
-								</styled.CartItemTitle>
-								<styled.QuantityPriceContainer>
-									<QuantityControl />
-									<styled.CartItemPrice>USD 2,000</styled.CartItemPrice>
-								</styled.QuantityPriceContainer>
-							</styled.CartDetails>
-							<styled.CartItemImageWrapper>
-								<styled.CartItemImage src="/images/item1.png" alt="Item" />
-							</styled.CartItemImageWrapper>
-							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
-						</styled.CartItem>
-						<styled.CartItem>
-							<styled.CartDetails>
-								<styled.CartItemTitle>
-									Solar inverter Solar inverter Solar inverter Solar inverter
-									Solar inverter
-								</styled.CartItemTitle>
-								<styled.QuantityPriceContainer>
-									<QuantityControl />
-									<styled.CartItemPrice>USD 2,000</styled.CartItemPrice>
-								</styled.QuantityPriceContainer>
-							</styled.CartDetails>
-							<styled.CartItemImageWrapper>
-								<styled.CartItemImage src="/images/item1.png" alt="Item" />
-							</styled.CartItemImageWrapper>
-							<styled.RemoveItem>&#x2715;</styled.RemoveItem>
-						</styled.CartItem>
+						{cart?.length === 0 ? (
+							<EmptyState content="You have no item in your basket" />
+						) : (
+							cart?.map((ct) => (
+								<styled.CartItem key={ct.itemId}>
+									<styled.CartDetails>
+										<styled.CartItemTitle>{ct.itemName}</styled.CartItemTitle>
+										<styled.QuantityPriceContainer>
+											<QuantityControl
+												max={ct.maxQuantity}
+												initial={ct.quantity}
+												id={ct.itemId}
+												onChange={updateQuantity}
+											/>
+											<styled.CartItemPrice>{`USD ${numberFormat(
+												ct.unitPrice
+											)}`}</styled.CartItemPrice>
+										</styled.QuantityPriceContainer>
+									</styled.CartDetails>
+									<styled.CartItemImageWrapper>
+										<styled.CartItemImage src="/images/item1.png" alt="Item" />
+									</styled.CartItemImageWrapper>
+									<styled.RemoveItem>&#x2715;</styled.RemoveItem>
+								</styled.CartItem>
+							))
+						)}
 					</styled.CartBodyContainer>
 				</styled.CartBody>
 				<styled.CartSummary>
