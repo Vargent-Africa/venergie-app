@@ -1,8 +1,21 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 import * as styled from "./styles/orderReceived";
 
 const orderReceived = () => {
+	const { state } = useLocation();
+
+	if (!state) {
+		return (
+			<styled.OrderReceivedWrapper>
+				<styled.OrderReceivedContainer>
+					<Link to="/">
+						<b>Go back to shop</b>
+					</Link>
+				</styled.OrderReceivedContainer>
+			</styled.OrderReceivedWrapper>
+		);
+	}
 	return (
 		<styled.OrderReceivedWrapper>
 			<styled.OrderReceivedContainer>

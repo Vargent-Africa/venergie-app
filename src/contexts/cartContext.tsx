@@ -6,16 +6,20 @@ import React, {
 	useState,
 } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 import QuantityControl from "components/misc/QuantityControl";
 import { numberFormat } from "utils/helpers";
+import EmptyState from "components/misc/EmptyState";
+import PageRoutes from "utils/pageRoutes";
 
 import * as styled from "./styles/cartContext";
-import EmptyState from "components/misc/EmptyState";
 
 type CartContextType = {
+	totalPrice: number;
 	cart: CartItem[];
 	addToCart: (item: CartItem) => void;
+	clearCart: () => void;
 	showCart: () => void;
 	hideCart: () => void;
 };
@@ -51,7 +55,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
 	const gotoCheckout = () => {
 		hideCart();
-		navigate("items/checkout", { replace: true });
+		if (cart.length === 0) {
+			toast.warn("Your cart is empty. Please add items before checking out.");
+			return;
+		}
+		navigate(PageRoutes.checkout, { replace: true });
 	};
 
 	useEffect(() => {
@@ -88,15 +96,17 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		return sum + item.unitPrice * item.quantity;
 	}, 0);
 
-	// const clearCart = () => {
-	// 	setCart([]);
-	// };
+	const clearCart = () => {
+		setCart([]);
+	};
 
 	return (
 		<CartContext.Provider
 			value={{
 				cart,
+				totalPrice,
 				addToCart,
+				clearCart,
 				showCart,
 				hideCart,
 			}}

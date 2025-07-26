@@ -5,6 +5,7 @@ import { isAxiosError } from "axios";
 
 import { createUser } from "api/users";
 import FormText from "components/forms/input/Text";
+import { sanitizeErrorMsg } from "utils/helpers";
 
 import * as styled from "./styles";
 import * as custom from "./styles/signup";
@@ -106,12 +107,10 @@ const Signup = () => {
 					address: "",
 				});
 
-				const resErrors = err.response?.data.message;
-				let errorMsgs: object = {};
+				const errorMsgs = sanitizeErrorMsg(
+					err.response?.data.message
+				) as Record<string, string>;
 
-				resErrors.forEach((er: { field: string; error: string }) => {
-					Object.assign(errorMsgs, { [er.field]: er.error.replace("_", " ") });
-				});
 				setErrorMsg((prev) => ({ ...prev, ...errorMsgs }));
 			} else {
 				console.log("unexpected", err);

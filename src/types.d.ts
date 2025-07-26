@@ -30,6 +30,11 @@ declare global {
 		unitPrice: number;
 		maxQuantity: number;
 	};
+
+	type FormErrorMsg = {
+		field: string;
+		error: string;
+	};
 }
 
 // This line is required to make this a module (avoid isolatedModules error)

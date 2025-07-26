@@ -1,6 +1,6 @@
 import FormText from "components/forms/input/Text";
 import FormSelect from "components/forms/select";
-import SubmitButton from "components/misc/button/SubmitButton";
+import SubmitButton from "components/misc/Button/SubmitButton";
 
 import * as styled from "./styles/profile";
 
@@ -88,7 +88,9 @@ const Profile = () => {
 							/>
 						</styled.FormContainer>
 						<styled.SubmitBtnContainer>
-							<SubmitButton />
+							<styled.BtnSubmit>
+								<SubmitButton />
+							</styled.BtnSubmit>
 						</styled.SubmitBtnContainer>
 					</styled.SectionBlock>
 				</styled.ProfileForm>
