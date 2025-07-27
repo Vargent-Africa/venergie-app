@@ -1,13 +1,13 @@
-type CartItemApi = {
+export type CartItemApi = {
 	item_guid: string;
 	item_name: string;
 	quantity: number;
 	unit_price: number;
 };
 
-type DeliveryData = {
-	[key: string]: any;
-};
+// type DeliveryData = {
+// 	[key: string]: any;
+// };
 
 export type Cart = {
 	guid: string;
@@ -15,7 +15,7 @@ export type Cart = {
 	guest_token: string;
 	cart_item: CartItemApi[];
 	sum_price: number;
-	delivery_details: DeliveryData;
+	delivery_details: Record<string, any>;
 	created_at: Date;
 	updated_at: Date;
 };
@@ -30,11 +30,3 @@ export type CreateCartInput = {
 	guest_token: string;
 	user_guid: string | null;
 };
-
-// export type GuestCreateCartInput = BaseCreateCartInput & {
-// 	guest_token: string;
-// };
-
-// export type UserCreateCartInput = BaseCreateCartInput & {
-// 	user_guid: string;
-// };
