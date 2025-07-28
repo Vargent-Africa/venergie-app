@@ -21,6 +21,7 @@ export const SearchContainer = styled.div`
 	width: 50%;
 	display: flex;
 	align-items: center;
+	position: relative;
 
 	@media (max-width: 1000px) {
 		width: 70%;
@@ -111,6 +112,7 @@ export const TableHeadRow = styled.tr`
 
 export const TableHeaderCell = styled.th`
 	display: table-cell;
+	text-transform: capitalize;
 
 	&:nth-child(1) {
 		position: sticky;
@@ -152,4 +154,17 @@ export const TableExtraText = styled.h3`
 	padding: 0.8rem 0;
 	margin-top: 2rem;
 	display: inline-block;
+`;
+
+export const ClearSearchWrapper = styled.div`
+	position: absolute;
+	cursor: pointer;
+	top: 0.6rem;
+	right: 1.2rem;
+`;
+
+export const ClearSearchIcon = styled.svg`
+	width: 2.4rem;
+	height: 2.4rem;
+	color: #d7d7d7;
 `;

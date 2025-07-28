@@ -15,6 +15,7 @@ export const OrderContainer = styled.div`
 	border-radius: 6px;
 	overflow: hidden;
 	padding: 0 2rem 4rem;
+	min-height: 70vh;
 
 	@media (max-width: ${Sizes.md}) {
 		padding-left: 2rem;

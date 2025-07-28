@@ -4,21 +4,26 @@ import { Colors } from "utils/colors";
 import { Btn } from "styles/ui";
 
 export const CheckoutWrapper = styled.section`
-	margin: 1.6rem 0 3.2rem;
+	margin: 3rem 0 3.2rem;
 `;
 
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.div<{ $isDisabled?: boolean }>`
 	display: flex;
+	flex-direction: ${({ $isDisabled }) => ($isDisabled ? "column" : "row")};
 	background-color: ${Colors.white};
 	border-radius: 5px;
 
-	@media (max-width: 600px) {
+	@media (min-width: 875px) {
+		min-height: 70vh;
+	}
+
+	@media (max-width: 820px) {
 		display: block;
 	}
 `;
 
 export const CheckoutInfo = styled.div`
-	padding: 4rem 4rem 3rem 2rem;
+	padding: 4rem 1rem 3rem 2rem;
 	flex-grow: 1;
 `;
 
@@ -27,13 +32,13 @@ export const ShippingInfo = styled.h3`
 	margin-top: 3rem;
 `;
 
-export const Form = styled.form`
+export const Form = styled.form<{ $isDisabled?: boolean }>`
 	margin-top: 1rem;
+	display: ${({ $isDisabled }) => ($isDisabled ? "none" : "block")};
 `;
 
 export const FormContainer = styled.div`
 	display: flex;
-	align-items: center;
 	gap: 2rem;
 	margin-top: 1.5rem;
 
@@ -44,8 +49,8 @@ export const FormContainer = styled.div`
 
 export const CheckoutReview = styled.div`
 	max-height: 82vh;
-	max-width: 40rem;
-	min-width: 30rem;
+	max-width: 50rem;
+	min-width: 40rem;
 
 	padding: 4rem 2rem;
 
@@ -54,7 +59,7 @@ export const CheckoutReview = styled.div`
 		min-width: 20rem;
 	}
 
-	@media (max-width: 600px) {
+	@media (max-width: 820px) {
 		max-width: 100%;
 	}
 `;

@@ -1,36 +1,247 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
+import { isAxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 import FormText from "components/forms/input/Text";
 import CheckBox from "components/forms/checkbox";
+import SubmitButton from "components/misc/Button/SubmitButton";
 import PageRoutes from "utils/pageRoutes";
+import { numberFormat, sanitizeErrorMsg } from "utils/helpers";
+import { useCart } from "contexts/cartContext";
+import { useAuth } from "contexts/authContext";
+import { createCart } from "api/carts";
+import useLocalStorage from "hooks/useLocalStorage";
 
 import * as common from "styles/ui";
 import * as styled from "./styles/checkout";
 
+type GuestUserInput = {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	address: string;
+	iagree: boolean;
+};
+
+type GuestUserInputError = {
+	first_name: string;
+	last_name: string;
+	email: string;
+	phone_number: string;
+	address: string;
+};
+
 const Checkout = () => {
 	const navigate = useNavigate();
+	const { cart, totalPrice } = useCart();
+	const { isAuthenticated, authUser } = useAuth();
+	const [venGt] = useLocalStorage("vengt", uuidv4());
+
+	const [useAuthData, setUseAuthData] = useState(false);
+
+	const [formData, setFormData] = useState<GuestUserInput>({
+		firstName: "",
+		lastName: "",
+		email: "",
+		phoneNumber: "",
+		address: "",
+		iagree: false,
+	});
+
+	const [errorMsg, setErrorMsg] = useState<GuestUserInputError>({
+		first_name: "",
+		email: "",
+		last_name: "",
+		phone_number: "",
+		address: "",
+	});
+
+	const { firstName, lastName, email, phoneNumber, address, iagree } = formData;
+
+	const {
+		first_name: eFirstName,
+		last_name: eLastName,
+		email: eEmail,
+		phone_number: ePhoneNumber,
+		address: eAddress,
+	} = errorMsg;
+
+	const handleToggleDisable = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUseAuthData(e.target.checked);
+	};
+
+	const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value, type, checked } = e.target;
+
+		setFormData((prev) => ({
+			...prev,
+			[name]: type === "checkbox" ? checked : value,
+		}));
+	};
+
+	const { isPending, mutate: createCartFn } = useMutation({
+		mutationFn: createCart,
+		onSuccess: () => {
+			//clearCart(); // TODO: This is temporary. clear cart only when payment is successful
+			navigate(PageRoutes.orderReceived, {
+				replace: true,
+				state: {
+					info: "successful",
+				},
+			});
+		},
+		onError: (err) => {
+			if (isAxiosError(err)) {
+				setErrorMsg({
+					first_name: "",
+					email: "",
+					last_name: "",
+					phone_number: "",
+					address: "",
+				});
+
+				const errorMsgs = sanitizeErrorMsg(
+					err.response?.data.message
+				) as Record<string, string>;
+
+				setErrorMsg((prev) => ({ ...prev, ...errorMsgs }));
+			} else {
+				return;
+			}
+		},
+	});
+
+	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+
+		if (
+			!useAuthData &&
+			(!firstName || !lastName || !address || !email || !phoneNumber)
+		) {
+			toast.error("Kindly provide all required fields before you proceed");
+			return;
+		}
+
+		if (!useAuthData && !iagree) {
+			toast.error(
+				"Kindly agree to our Terms and Conditions before you proceed"
+			);
+			return;
+		}
+
+		const newCartItems = cart.map(
+			({ itemId, itemName, quantity, unitPrice }) => ({
+				item_guid: itemId,
+				item_name: itemName,
+				quantity,
+				unit_price: unitPrice,
+			})
+		);
+
+		if (useAuthData && authUser) {
+			const userCart = {
+				user_guid: authUser.guid,
+				guest_token: venGt ?? "",
+				cart_item: newCartItems,
+				first_name: authUser.first_name,
+				last_name: authUser.last_name,
+				email: authUser.email,
+				address: authUser.address,
+				phone_number: authUser.phone_number,
+			};
+
+			createCartFn(userCart);
+		} else {
+			const guestCart = {
+				user_guid: authUser ? authUser.guid : null,
+				guest_token: venGt ?? "",
+				cart_item: newCartItems,
+				first_name: firstName,
+				last_name: lastName,
+				email,
+				address,
+				phone_number: phoneNumber,
+			};
+
+			createCartFn(guestCart);
+		}
+	};
+
+	useEffect(() => {
+		if (cart.length === 0) {
+			toast.warn("Your cart is empty. Please add items before checking out.");
+			navigate(PageRoutes.itemLists, { replace: true });
+		}
+	}, [cart]);
 
 	return (
 		<styled.CheckoutWrapper>
 			<common.Container>
-				<styled.CheckoutContainer>
+				<styled.CheckoutContainer $isDisabled={useAuthData}>
 					<styled.CheckoutInfo>
 						<common.PageTitle>Checkout</common.PageTitle>
 						<styled.ShippingInfo>Shipping Info</styled.ShippingInfo>
-						<styled.Form>
+						{isAuthenticated && (
+							<CheckBox
+								label="Use my user details"
+								checked={useAuthData}
+								onChange={handleToggleDisable}
+							/>
+						)}
+						<styled.Form $isDisabled={useAuthData}>
 							<styled.FormContainer>
 								<FormText
 									label="First Name"
 									type="text"
-									name="firstname"
+									name="firstName"
+									value={firstName}
+									disabled={useAuthData}
+									onChange={handleOnchange}
+									pattern="^[a-zA-Z]+$"
 									placeholder="Enter your first name"
+									hasError={eFirstName == "" ? false : true}
+									errorMessage={
+										eFirstName !== ""
+											? eFirstName
+											: "First name is required and should contain only letters"
+									}
+									onInvalid={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity(
+											"First name is required and should contain only letters"
+										)
+									}
+									onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity("")
+									}
 									required
 								/>
 								<FormText
 									label="Last Name"
 									type="text"
-									name="lastname"
+									name="lastName"
+									value={lastName}
+									disabled={useAuthData}
+									onChange={handleOnchange}
 									placeholder="Enter your last name"
+									pattern="^[a-zA-Z]+$"
+									hasError={eLastName == "" ? false : true}
+									errorMessage={
+										eLastName !== ""
+											? eLastName
+											: "Last name is required and should contain only letters"
+									}
+									onInvalid={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity(
+											"Last name is required and should contain only letters"
+										)
+									}
+									onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity("")
+									}
 									required
 								/>
 							</styled.FormContainer>
@@ -39,15 +250,45 @@ const Checkout = () => {
 									label="Email"
 									type="email"
 									name="email"
+									value={email}
+									disabled={useAuthData}
+									onChange={handleOnchange}
 									placeholder="Enter your email address"
 									required
+									hasError={eEmail == "" ? false : true}
+									errorMessage={
+										eEmail !== "" ? eEmail : "Must be a valid email"
+									}
+									onInvalid={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity("Must be a valid email")
+									}
+									onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity("")
+									}
 								/>
 								<FormText
-									label="Phone Number"
-									type="text"
-									name="phone"
-									placeholder="Enter your phone number"
+									label="Mobile"
+									type="tel"
+									name="phoneNumber"
+									value={phoneNumber}
+									disabled={useAuthData}
+									onChange={handleOnchange}
+									placeholder="Enter your phone number in this format: +234xxxxxxxxxx"
 									required
+									hasError={ePhoneNumber == "" ? false : true}
+									errorMessage={
+										ePhoneNumber !== ""
+											? ePhoneNumber
+											: "Please enter a valid phone number"
+									}
+									onInvalid={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity(
+											"Please enter a valid phone number"
+										)
+									}
+									onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity("")
+									}
 								/>
 							</styled.FormContainer>
 							<styled.FormContainer>
@@ -55,165 +296,55 @@ const Checkout = () => {
 									label="Address"
 									type="text"
 									name="address"
+									value={address}
+									disabled={useAuthData}
+									onChange={handleOnchange}
 									placeholder="Enter your address"
 									required
+									hasError={eAddress == "" ? false : true}
+									errorMessage={
+										address !== "" ? address : "Address is required"
+									}
+									onInvalid={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity("Address is required")
+									}
+									onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+										e.target.setCustomValidity("")
+									}
 								/>
 							</styled.FormContainer>
-							<CheckBox label="I have read and agreed to the Terms and Conditions" />
+							<CheckBox
+								name="iagree"
+								label="I have read and agreed to the Terms and Conditions"
+								disabled={useAuthData}
+								onChange={handleOnchange}
+							/>
 						</styled.Form>
 					</styled.CheckoutInfo>
 					<styled.CheckoutReview>
 						<styled.ReviewTitle>Review your cart</styled.ReviewTitle>
 						<styled.ReviewItemContainer>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>1x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$200</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar inverter Solar inverter Solar inverter
-										Solar inverter nhgggd yddy
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>2x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$500</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
-							<styled.ReviewItem>
-								<styled.ReviewItemImageWrapper>
-									<styled.ReviewItemImage src="/images/item1.png" alt="Item" />
-								</styled.ReviewItemImageWrapper>
-								<styled.ReviewItemDetails>
-									<styled.ReviewItemName>
-										Solar inverter Solar
-									</styled.ReviewItemName>
-									<styled.ReviewItemQuantityPrice>
-										<styled.ReviewItemQuantity>3x</styled.ReviewItemQuantity>
-										<styled.ReviewItemPrice>$1,500</styled.ReviewItemPrice>
-									</styled.ReviewItemQuantityPrice>
-								</styled.ReviewItemDetails>
-							</styled.ReviewItem>
+							{cart?.map((ct) => (
+								<styled.ReviewItem key={ct.itemId}>
+									<styled.ReviewItemImageWrapper>
+										<styled.ReviewItemImage
+											src="/images/item1.png"
+											alt="Item"
+										/>
+									</styled.ReviewItemImageWrapper>
+									<styled.ReviewItemDetails>
+										<styled.ReviewItemName>{ct.itemName}</styled.ReviewItemName>
+										<styled.ReviewItemQuantityPrice>
+											<styled.ReviewItemQuantity>
+												{numberFormat(ct.quantity)}x
+											</styled.ReviewItemQuantity>
+											<styled.ReviewItemPrice>{`NGN ${numberFormat(
+												ct.unitPrice
+											)}`}</styled.ReviewItemPrice>
+										</styled.ReviewItemQuantityPrice>
+									</styled.ReviewItemDetails>
+								</styled.ReviewItem>
+							))}
 						</styled.ReviewItemContainer>
 						<styled.CheckoutSummaryWrapper>
 							<styled.CheckoutSummaryContainer>
@@ -221,25 +352,27 @@ const Checkout = () => {
 									Subtotal
 								</styled.CheckoutSummaryTitle>
 								<styled.CheckoutSummaryPrice>
-									$4,000
+									{`NGN ${numberFormat(totalPrice)}`}
 								</styled.CheckoutSummaryPrice>
 							</styled.CheckoutSummaryContainer>
 							<styled.CheckoutSummaryContainer>
 								<styled.CheckoutSummaryTitle>
 									Shipping
 								</styled.CheckoutSummaryTitle>
-								<styled.CheckoutSummaryPrice>$100</styled.CheckoutSummaryPrice>
+								<styled.CheckoutSummaryPrice>NGN 0</styled.CheckoutSummaryPrice>
 							</styled.CheckoutSummaryContainer>
 							<styled.CheckoutSummaryContainer>
 								<styled.CheckoutSummaryTotal>Total</styled.CheckoutSummaryTotal>
 								<styled.CheckoutSummaryTotalPrice>
-									$4,100
+									{`NGN ${numberFormat(totalPrice)}`}
 								</styled.CheckoutSummaryTotalPrice>
 							</styled.CheckoutSummaryContainer>
 							<styled.BtnPayNow
-								onClick={() => navigate(PageRoutes.orderReceived)}
+								type="button"
+								disabled={isPending}
+								onClick={handleSubmit}
 							>
-								PAY NOW
+								<SubmitButton text="PAY NOW" disabled={isPending} />
 							</styled.BtnPayNow>
 						</styled.CheckoutSummaryWrapper>
 					</styled.CheckoutReview>

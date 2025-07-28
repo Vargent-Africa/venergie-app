@@ -1,21 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 
 import { Colors } from "utils/colors";
-import { Btn } from "styles/ui";
-
-export const BtnSubmit = styled.button`
-	${Btn}
-	color: ${Colors.white};
-	background-color: ${Colors.black};
-	margin-top: 2rem;
-	font-weight: 400;
-	font-size: 1.2rem;
-	line-height: 2rem;
-	padding: 1.2rem;
-	width: 100%;
-	letter-spacing: 2px;
-	border-radius: 4px;
-`;
 
 export const BtnContent = styled.div`
 	border-radius: 1rem;
