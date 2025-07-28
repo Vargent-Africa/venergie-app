@@ -22,17 +22,33 @@ export function usePaginationQuery({
 		};
 
 		if (query) {
-			nextParams.query = ref.current?.value || "";
+			nextParams.query = ref.current?.value?.toLowerCase() || "";
 		}
 
 		setSearchParams(nextParams);
+	};
+
+	const handleClick = () => {
+		setSearchParams({
+			query: ref.current?.value || "",
+			page: "1",
+		});
+	};
+
+	const handleClear = () => {
+		if (ref.current) {
+			ref.current.value = "";
+		}
+		setSearchParams({});
 	};
 
 	return {
 		query,
 		page,
 		limit,
-		changePage,
 		ref,
+		changePage,
+		handleClick,
+		handleClear,
 	};
 }
