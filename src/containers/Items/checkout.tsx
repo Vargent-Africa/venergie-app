@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { isAxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { KlumpCheckout } from "klump-react";
 
 import FormText from "components/forms/input/Text";
 import CheckBox from "components/forms/checkbox";
-import SubmitButton from "components/misc/Button/SubmitButton";
 import PageRoutes from "utils/pageRoutes";
 import { numberFormat, sanitizeErrorMsg } from "utils/helpers";
 import { useCart } from "contexts/cartContext";
@@ -17,6 +17,9 @@ import useLocalStorage from "hooks/useLocalStorage";
 
 import * as common from "styles/ui";
 import * as styled from "./styles/checkout";
+import { Cart } from "api/types/cart";
+import { createPayment } from "api/payments";
+import { PaymentGateway } from "api/types/payment";
 
 type GuestUserInput = {
 	firstName: string;
@@ -37,7 +40,7 @@ type GuestUserInputError = {
 
 const Checkout = () => {
 	const navigate = useNavigate();
-	const { cart, totalPrice } = useCart();
+	const { cart, totalPrice, clearCart } = useCart();
 	const { isAuthenticated, authUser } = useAuth();
 	const [venGt] = useLocalStorage("vengt", uuidv4());
 
@@ -83,16 +86,10 @@ const Checkout = () => {
 		}));
 	};
 
-	const { isPending, mutate: createCartFn } = useMutation({
+	const { mutate: createCartFn } = useMutation({
 		mutationFn: createCart,
-		onSuccess: () => {
-			//clearCart(); // TODO: This is temporary. clear cart only when payment is successful
-			navigate(PageRoutes.orderReceived, {
-				replace: true,
-				state: {
-					info: "successful",
-				},
-			});
+		onSuccess: (data) => {
+			payWithKlump(data);
 		},
 		onError: (err) => {
 			if (isAxiosError(err)) {
@@ -112,6 +109,19 @@ const Checkout = () => {
 			} else {
 				return;
 			}
+		},
+	});
+
+	const { mutate: createPaymentFn } = useMutation({
+		mutationFn: createPayment,
+		onSuccess: () => {
+			navigate(PageRoutes.orderReceived, {
+				replace: true,
+				state: {
+					info: "successful",
+				},
+			});
+			clearCart();
 		},
 	});
 
@@ -178,8 +188,69 @@ const Checkout = () => {
 		}
 	}, [cart]);
 
+	const payWithKlump = (cart: Cart) => {
+		const {
+			first_name,
+			last_name,
+			email: userEmail,
+			phone,
+		} = cart.delivery_details;
+		const { shipping_fee, sub_total } = cart.order_cost;
+		const items = cart.cart_item.map(
+			({
+				item_guid: itemGuid,
+				item_name: itemName,
+				quantity,
+				unit_price: unitPrice,
+			}) => ({
+				image_url:
+					"https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+				item_url: `${import.meta.env.VG_APP_BASE_URL}/items/${itemGuid}`,
+				name: itemName,
+				quantity,
+				unit_price: +unitPrice,
+			})
+		);
+
+		const payload = {
+			publicKey: import.meta.env.VG_KLUMP_PUBKEY,
+			data: {
+				amount: sub_total,
+				shipping_fee,
+				currency: "NGN",
+				first_name,
+				last_name,
+				email: userEmail,
+				phone,
+				merchant_reference: cart.order_payment_ref,
+				meta_data: {
+					ref: cart.order_payment_ref,
+				},
+				items,
+			},
+			onSuccess,
+			onError,
+		};
+
+		new Klump(payload);
+	};
+
+	const onSuccess = (eventData: KlumpSuccessData) => {
+		createPaymentFn({
+			payment_gateway: PaymentGateway.KLUMP,
+			payment_gateway_status: "new",
+			payment_meta: eventData.data,
+			payment_gateway_ref: eventData.data.data.data.reference,
+		});
+		return eventData;
+	};
+
+	const onError = (data: KlumpError) => {
+		toast.error(data.data.message);
+	};
+
 	return (
-		<styled.CheckoutWrapper>
+		<styled.CheckoutWrapper $isDisabled={useAuthData}>
 			<common.Container>
 				<styled.CheckoutContainer $isDisabled={useAuthData}>
 					<styled.CheckoutInfo>
@@ -367,13 +438,9 @@ const Checkout = () => {
 									{`NGN ${numberFormat(totalPrice)}`}
 								</styled.CheckoutSummaryTotalPrice>
 							</styled.CheckoutSummaryContainer>
-							<styled.BtnPayNow
-								type="button"
-								disabled={isPending}
-								onClick={handleSubmit}
-							>
-								<SubmitButton text="PAY NOW" disabled={isPending} />
-							</styled.BtnPayNow>
+							<styled.BtnPayWrapper>
+								<KlumpCheckout onClick={handleSubmit} />
+							</styled.BtnPayWrapper>
 						</styled.CheckoutSummaryWrapper>
 					</styled.CheckoutReview>
 				</styled.CheckoutContainer>

@@ -5,17 +5,28 @@ export type CartItemApi = {
 	unit_price: number;
 };
 
-// type DeliveryData = {
-// 	[key: string]: any;
-// };
+interface DeliveryData {
+	first_name: string;
+	last_name: string;
+	email: string;
+	address: string;
+	phone_number: string;
+	[key: string]: any;
+}
+
+interface OrderCost {
+	sub_total: number;
+	shipping_fee: number;
+}
 
 export type Cart = {
 	guid: string;
 	user_guid: string;
 	guest_token: string;
 	cart_item: CartItemApi[];
-	sum_price: number;
-	delivery_details: Record<string, any>;
+	order_cost: OrderCost;
+	delivery_details: DeliveryData;
+	order_payment_ref: string;
 	created_at: Date;
 	updated_at: Date;
 };

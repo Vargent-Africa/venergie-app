@@ -30,6 +30,8 @@ const ItemList = () => {
 		return toast.error(error.message);
 	}
 
+	const { pages, total, data: items } = itemsData!;
+
 	return (
 		<Fragment>
 			<common.PageTitleWrapper>
@@ -40,7 +42,7 @@ const ItemList = () => {
 					</common.PageTitleDescription>
 				</common.Container>
 			</common.PageTitleWrapper>
-			{itemsData?.data?.length === 0 ? (
+			{items.length === 0 ? (
 				<common.Container>
 					<EmptyState content="No Item" />
 				</common.Container>
@@ -49,7 +51,7 @@ const ItemList = () => {
 					<styled.ListItemsWrapper>
 						<common.Container>
 							<styled.ListItems>
-								{itemsData?.data?.map((item) => (
+								{items.map((item) => (
 									<styled.ListItem key={item.guid}>
 										<Link to={`items/${item.guid}`}>
 											<styled.ListItemImg src="/images/item1.png" />
@@ -68,10 +70,10 @@ const ItemList = () => {
 					<common.Container>
 						<Pagination
 							page={+page}
-							pages={itemsData!.pages}
+							pages={pages}
 							limit={+limit}
 							changePage={changePage}
-							totalRecords={itemsData!.total}
+							totalRecords={total}
 						/>
 					</common.Container>
 				</Fragment>

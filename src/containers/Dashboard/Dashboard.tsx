@@ -1,14 +1,21 @@
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 import Table from "components/tables/Table";
 import EmptyState from "components/misc/EmptyState";
+import Loader from "components/misc/Loader";
 import PageRoutes from "utils/pageRoutes";
 import { useOrders } from "hooks/useOrder";
 
 import * as styled from "./styles/dashboard";
 
 const Dashboard = () => {
-	const { data: orderData } = useOrders({});
+	const { isLoading, isError, error, data: orderData } = useOrders({});
+
+	if (isLoading) return <Loader />;
+	if (isError) {
+		return toast.error(error.message);
+	}
 
 	return (
 		<styled.DashboardWrapper>
