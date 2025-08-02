@@ -5,8 +5,8 @@ import { Routes, Route } from "react-router";
 import RootLayout from "components/layouts/Root";
 import MainLayout from "components/layouts/Main";
 // import Persist from "./components/layouts/Persist";
-import DashboardLayout from "./components/layouts/User";
-import AuthLayout from "./components/layouts/Auth";
+import DashboardLayout from "components/layouts/User";
+import AuthLayout from "components/layouts/Auth";
 import { ProtectedRoute } from "components/layouts/ProtectedRoute";
 
 //Misc

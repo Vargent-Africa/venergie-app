@@ -12,11 +12,6 @@ import * as common from "styles/ui";
 
 import * as styled from "./styles/order";
 
-// const ordersEx = [
-// 	{ orderId: "A001", customerName: "Alice", totalAmount: 150 },
-// 	{ orderId: "A002", customerName: "Bob", totalAmount: 200 },
-// ];
-
 const OrderHistory = () => {
 	const { query, page, limit, ref, changePage, handleClick, handleClear } =
 		usePaginationQuery({

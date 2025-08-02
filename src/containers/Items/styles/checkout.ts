@@ -1,17 +1,35 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { Colors } from "utils/colors";
-import { Btn } from "styles/ui";
 
-export const CheckoutWrapper = styled.section`
+export const CheckoutWrapper = styled.section<{ $isDisabled?: boolean }>`
 	margin: 3rem 0 3.2rem;
+
+	${({ $isDisabled }) =>
+		$isDisabled &&
+		css`
+			width: 50%;
+			margin-left: auto;
+			margin-right: auto;
+		`}
+
+	@media (max-width: 910px) {
+		width: 100%;
+	}
 `;
 
 export const CheckoutContainer = styled.div<{ $isDisabled?: boolean }>`
 	display: flex;
-	flex-direction: ${({ $isDisabled }) => ($isDisabled ? "column" : "row")};
 	background-color: ${Colors.white};
 	border-radius: 5px;
+
+	${({ $isDisabled }) =>
+		$isDisabled &&
+		css`
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		`}
 
 	@media (min-width: 875px) {
 		min-height: 70vh;
@@ -173,16 +191,6 @@ export const CheckoutSummaryTotalPrice = styled.span`
 	font-weight: 600;
 `;
 
-export const BtnPayNow = styled.button`
-	${Btn}
-	color: ${Colors.white};
-	background-color: ${Colors.black};
+export const BtnPayWrapper = styled.div`
 	margin-top: 2rem;
-	font-weight: 400;
-	font-size: 1.2rem;
-	line-height: 2rem;
-	padding: 1rem 1.5rem;
-	width: 100%;
-	letter-spacing: 2px;
-	border-radius: 4px;
 `;
