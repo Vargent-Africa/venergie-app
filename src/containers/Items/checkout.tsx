@@ -89,6 +89,8 @@ const Checkout = () => {
 	const { mutate: createCartFn } = useMutation({
 		mutationFn: createCart,
 		onSuccess: (data) => {
+			console.log("all good");
+
 			payWithKlump(data);
 		},
 		onError: (err) => {
@@ -101,11 +103,13 @@ const Checkout = () => {
 					address: "",
 				});
 
-				const errorMsgs = sanitizeErrorMsg(
-					err.response?.data.message
-				) as Record<string, string>;
+				const errorMsgs = sanitizeErrorMsg(err.response?.data.message);
 
-				setErrorMsg((prev) => ({ ...prev, ...errorMsgs }));
+				if (typeof errorMsgs === "string") {
+					toast.error(errorMsgs);
+				} else {
+					setErrorMsg((prev) => ({ ...prev, ...errorMsgs }));
+				}
 			} else {
 				return;
 			}
@@ -189,6 +193,8 @@ const Checkout = () => {
 	}, [cart]);
 
 	const payWithKlump = (cart: Cart) => {
+		console.log("called success");
+
 		const {
 			first_name,
 			last_name,
@@ -230,6 +236,9 @@ const Checkout = () => {
 			},
 			onSuccess,
 			onError,
+			onLoad,
+			onOpen,
+			onClose,
 		};
 
 		new Klump(payload);
@@ -247,6 +256,17 @@ const Checkout = () => {
 
 	const onError = (data: KlumpError) => {
 		toast.error(data.data.message);
+	};
+
+	const onLoad = () => {
+		return;
+	};
+
+	const onOpen = () => {
+		return;
+	};
+	const onClose = () => {
+		return;
 	};
 
 	return (
