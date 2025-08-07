@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { v4 as uuidv4 } from "uuid";
 import { isAxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { KlumpCheckout } from "klump-react";
@@ -14,12 +13,14 @@ import { useCart } from "contexts/cartContext";
 import { useAuth } from "contexts/authContext";
 import { createCart } from "api/carts";
 import useLocalStorage from "hooks/useLocalStorage";
-
-import * as common from "styles/ui";
-import * as styled from "./styles/checkout";
+import { translator } from "utils/uuid";
 import { Cart } from "api/types/cart";
 import { createPayment } from "api/payments";
 import { PaymentGateway } from "api/types/payment";
+
+import * as common from "styles/ui";
+
+import * as styled from "./styles/checkout";
 
 type GuestUserInput = {
 	firstName: string;
@@ -42,7 +43,7 @@ const Checkout = () => {
 	const navigate = useNavigate();
 	const { cart, totalPrice, clearCart } = useCart();
 	const { isAuthenticated, authUser } = useAuth();
-	const [venGt] = useLocalStorage("vengt", uuidv4());
+	const [venGt] = useLocalStorage("vengt", translator.generate());
 
 	const [useAuthData, setUseAuthData] = useState(false);
 
@@ -89,8 +90,6 @@ const Checkout = () => {
 	const { mutate: createCartFn } = useMutation({
 		mutationFn: createCart,
 		onSuccess: (data) => {
-			console.log("all good");
-
 			payWithKlump(data);
 		},
 		onError: (err) => {
@@ -193,8 +192,6 @@ const Checkout = () => {
 	}, [cart]);
 
 	const payWithKlump = (cart: Cart) => {
-		console.log("called success");
-
 		const {
 			first_name,
 			last_name,
