@@ -38,13 +38,22 @@ const Item = () => {
 			<common.Container>
 				<styled.ItemImgContainer>
 					<styled.ItemMainImgContainer>
-						<styled.ItemMainImg src="/images/item1.png" />
+						{itemData.images ? (
+							<styled.ItemMainImg
+								src={`${import.meta.env.VG_BUCKET_KEY}/${itemData.images[0]}`}
+							/>
+						) : (
+							<styled.ItemMainImg src="/images/item-img.png" />
+						)}
 					</styled.ItemMainImgContainer>
 					<styled.ItemRestImgContainer>
-						<styled.ItemRestImg src="/images/item1.png" />
-						<styled.ItemRestImg src="/images/item2.png" />
-						<styled.ItemRestImg src="/images/item3.png" />
-						<styled.ItemRestImg src="/images/item4.jpg" />
+						{itemData.images &&
+							itemData.images.map((item, ind) => (
+								<styled.ItemRestImg
+									key={ind}
+									src={`${import.meta.env.VG_BUCKET_KEY}/${item}`}
+								/>
+							))}
 					</styled.ItemRestImgContainer>
 				</styled.ItemImgContainer>
 				<styled.ItemDetailsContainer>

@@ -54,7 +54,15 @@ const ItemList = () => {
 								{items.map((item) => (
 									<styled.ListItem key={item.guid}>
 										<Link to={`items/${item.guid}`}>
-											<styled.ListItemImg src="/images/item1.png" />
+											{item.images ? (
+												<styled.ListItemImg
+													src={`${import.meta.env.VG_BUCKET_KEY}/${
+														item.images[0]
+													}`}
+												/>
+											) : (
+												<styled.ListItemImg src="/images/item-img.png" />
+											)}
 											<styled.ListItemDetails>
 												<styled.ListItemName>{item.name}</styled.ListItemName>
 												<styled.ListItemPrice>
