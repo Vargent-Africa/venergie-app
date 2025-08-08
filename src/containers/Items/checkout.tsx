@@ -415,10 +415,17 @@ const Checkout = () => {
 							{cart?.map((ct) => (
 								<styled.ReviewItem key={ct.itemId}>
 									<styled.ReviewItemImageWrapper>
-										<styled.ReviewItemImage
-											src="/images/item1.png"
-											alt="Item"
-										/>
+										{ct.itemImg ? (
+											<styled.ReviewItemImage
+												src={ct.itemImg}
+												alt="Cart image"
+											/>
+										) : (
+											<styled.ReviewItemImage
+												src="/images/item-img.png"
+												alt="Cart image"
+											/>
+										)}
 									</styled.ReviewItemImageWrapper>
 									<styled.ReviewItemDetails>
 										<styled.ReviewItemName>{ct.itemName}</styled.ReviewItemName>

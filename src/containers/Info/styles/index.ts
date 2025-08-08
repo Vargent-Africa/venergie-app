@@ -41,3 +41,15 @@ export const SubText = styled.p`
 	margin-top: 1.5rem;
 	max-width: 37.4rem;
 `;
+
+export const BtnWrapper = styled.div`
+	background-color: ${Colors.black};
+	padding: 1.1rem 2rem;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	font-weight: 600;
+	color: ${Colors.white};
+`;

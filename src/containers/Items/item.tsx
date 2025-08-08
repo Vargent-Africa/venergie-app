@@ -19,12 +19,15 @@ const Item = () => {
 	const { isPending, isError, data: itemData } = useItemDetails(id);
 
 	const handleAddToCart = (cartItem: CartItem) => {
+		const { itemId, itemName, unitPrice, quantity, maxQuantity, itemImg } =
+			cartItem;
 		addToCart({
-			itemId: cartItem.itemId,
-			itemName: cartItem.itemName,
-			unitPrice: cartItem.unitPrice,
-			quantity: cartItem.quantity,
-			maxQuantity: cartItem.maxQuantity,
+			itemId,
+			itemName,
+			unitPrice,
+			quantity,
+			maxQuantity,
+			itemImg,
 		});
 
 		showCart();
@@ -78,6 +81,9 @@ const Item = () => {
 								quantity,
 								unitPrice: itemData.price,
 								maxQuantity: itemData.quantity,
+								itemImg: itemData.images
+									? `${import.meta.env.VG_BUCKET_KEY}/${itemData.images[0]}`
+									: null,
 							})
 						}
 					>

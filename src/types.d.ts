@@ -29,6 +29,7 @@ declare global {
 		quantity: number;
 		unitPrice: number;
 		maxQuantity: number;
+		itemImg?: string | null;
 	};
 
 	type FormErrorMsg = {

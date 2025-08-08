@@ -15,6 +15,8 @@ import Loader from "components/misc/Loader";
 //Auth
 const Login = lazy(() => import("containers/Auth/Login"));
 const Signup = lazy(() => import("containers/Auth/Signup"));
+const ForgotPassword = lazy(() => import("containers/Auth/ForgotPassword"));
+const ResetPassword = lazy(() => import("containers/Auth/ResetPassword"));
 
 //Items
 const ItemLists = lazy(() => import("containers/Items/ItemList"));
@@ -29,6 +31,7 @@ const Profile = lazy(() => import("containers/Profile/Profile"));
 
 // Info
 import AccountCreated from "containers/Info/AccountCreated";
+import AccountVerified from "containers/Info/AccountVerified";
 import NotFound from "containers/Info/NotFound";
 
 const App = () => {
@@ -118,6 +121,30 @@ const App = () => {
 							element={
 								<Suspense fallback={<Loader />}>
 									<AccountCreated />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="verify/:email/:token"
+							element={
+								<Suspense fallback={<Loader />}>
+									<AccountVerified />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="forgot-password"
+							element={
+								<Suspense fallback={<div>Loading...</div>}>
+									<ForgotPassword />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="reset/password/:email/:token"
+							element={
+								<Suspense fallback={<div>Loading...</div>}>
+									<ResetPassword />
 								</Suspense>
 							}
 						/>

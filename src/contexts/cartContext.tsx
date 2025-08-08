@@ -153,7 +153,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 										</styled.QuantityPriceContainer>
 									</styled.CartDetails>
 									<styled.CartItemImageWrapper>
-										<styled.CartItemImage src="/images/item1.png" alt="Item" />
+										{ct.itemImg ? (
+											<styled.CartItemImage src={ct.itemImg} alt="Cart image" />
+										) : (
+											<styled.CartItemImage
+												src="/images/item-img.png"
+												alt="Cart image"
+											/>
+										)}
 									</styled.CartItemImageWrapper>
 									<styled.RemoveItem onClick={() => removeFromCart(ct.itemId)}>
 										&#x2715;
