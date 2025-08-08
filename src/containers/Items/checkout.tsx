@@ -205,9 +205,9 @@ const Checkout = () => {
 				item_name: itemName,
 				quantity,
 				unit_price: unitPrice,
+				item_img: itemImg,
 			}) => ({
-				image_url:
-					"https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+				image_url: `${import.meta.env.VG_BUCKET_KEY}/${itemImg}`,
 				item_url: `${import.meta.env.VG_APP_BASE_URL}/items/${itemGuid}`,
 				name: itemName,
 				quantity,

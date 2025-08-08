@@ -3,6 +3,7 @@ export type CartItemApi = {
 	item_name: string;
 	quantity: number;
 	unit_price: number;
+	item_img?: string | null;
 };
 
 interface DeliveryData {
