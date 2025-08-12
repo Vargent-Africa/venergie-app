@@ -1,8 +1,9 @@
-import { getData, postData } from "utils/api";
+import { getData, patchData, postData } from "utils/api";
 import {
 	CreateUser,
 	Login,
 	ResetPassword,
+	UpdateUser,
 	User,
 	VerifyAccount,
 } from "./types/user";
@@ -36,4 +37,8 @@ export function forgotPassword(email: string): Promise<boolean> {
 
 export function resetPassword(input: ResetPassword): Promise<boolean> {
 	return postData("/auth/reset/password", input);
+}
+
+export function updateUser(input: UpdateUser): Promise<User> {
+	return patchData("/users", input);
 }

@@ -18,6 +18,7 @@ export type User = {
 	first_name: string;
 	last_name: string;
 	email: string;
+	dob: string;
 	phone_number: string;
 	role: string;
 	status: string;
@@ -44,3 +45,13 @@ export type VerifyAccount = {
 	encoded_email: string;
 	encoded_token: string;
 };
+
+export interface UpdateUser {
+	first_name?: string;
+	last_name?: string;
+	phone_number: string;
+	dob?: string;
+	gender?: string;
+	country?: string;
+	address?: string;
+}

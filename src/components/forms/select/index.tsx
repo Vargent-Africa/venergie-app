@@ -39,11 +39,13 @@ const FormSelect = <T extends { value: string; key: string; opt: string }>(
 					data-focused={focused.toString()}
 					data-haserror={hasError.toString()}
 				>
-					<option value="" key="">
+					<option value="" key="select option">
 						{emptyOption}
 					</option>
-					{options.map((option, _ind) => (
-						<option {...option}>{option.opt}</option>
+					{options.map((option) => (
+						<option key={option.key} value={option.value}>
+							{option.opt}
+						</option>
 					))}
 				</styled.Select>
 				<styled.CaretWrap>
