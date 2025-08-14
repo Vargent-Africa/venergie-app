@@ -8,12 +8,14 @@ import PageRoutes from "utils/pageRoutes";
 import * as common from "styles/ui";
 
 import * as styled from "./styles/main";
+import { useLogout } from "hooks/useLogout";
 
 const MainLayout = () => {
 	const barRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
 	const { cart, showCart } = useCart();
 	const { isAuthenticated } = useAuth();
+	const { mutate: logOutUser } = useLogout();
 
 	const handleShowMenu = () => {
 		menuRef.current?.classList.toggle("show");
@@ -28,8 +30,6 @@ const MainLayout = () => {
 			barRef.current?.classList.remove("toggle");
 		}
 	};
-
-	// console.log("authUser", authUser);
 
 	return (
 		<styled.MainWrapper>
@@ -52,11 +52,16 @@ const MainLayout = () => {
 									</Link>
 								</styled.NavLink>
 								{isAuthenticated ? (
-									<styled.NavLink>
-										<Link to={PageRoutes.dashboard}>
-											<styled.StyledLink>Dashboard</styled.StyledLink>
-										</Link>
-									</styled.NavLink>
+									<>
+										<styled.NavLink>
+											<Link to={PageRoutes.dashboard}>
+												<styled.StyledLink>Dashboard</styled.StyledLink>
+											</Link>
+										</styled.NavLink>
+										<styled.NavLink>
+											<div onClick={() => logOutUser()}>Log out</div>
+										</styled.NavLink>
+									</>
 								) : (
 									<styled.NavLink>
 										<Link to={PageRoutes.login}>

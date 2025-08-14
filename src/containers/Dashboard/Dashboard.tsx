@@ -6,11 +6,18 @@ import EmptyState from "components/misc/EmptyState";
 import Loader from "components/misc/Loader";
 import PageRoutes from "utils/pageRoutes";
 import { useOrders } from "hooks/useOrder";
+import { usePaginationQuery } from "hooks/usePaginationQuery";
 
 import * as styled from "./styles/dashboard";
 
 const Dashboard = () => {
-	const { isLoading, isError, error, data: orderData } = useOrders({});
+	const { query, page, limit } = usePaginationQuery({});
+	const {
+		isLoading,
+		isError,
+		error,
+		data: orderData,
+	} = useOrders({ page: +page, limit: +limit, query });
 
 	if (isLoading) return <Loader />;
 	if (isError) {

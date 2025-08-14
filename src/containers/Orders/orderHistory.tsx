@@ -36,7 +36,7 @@ const OrderHistory = () => {
 		<styled.OrderWrapper>
 			<styled.OrderHeader>Order History</styled.OrderHeader>
 			<styled.OrderContainer>
-				{orders.length === 0 ? (
+				{orders?.length === 0 ? (
 					<common.Container>
 						<EmptyState content="No Orders" />
 					</common.Container>

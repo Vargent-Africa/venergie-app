@@ -78,13 +78,11 @@ const Profile = () => {
 	const {
 		first_name: eFirstName,
 		last_name: eLastName,
-		email: eEmail,
-		password: ePassword,
+
 		phone_number: ePhoneNumber,
 		country: eCountry,
 		address: eAddress,
 		gender: eGender,
-		dob: eDob,
 	} = errorMsg;
 
 	const handleOnchangeEdit = (e: React.ChangeEvent<HTMLInputElement>) => {

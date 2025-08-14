@@ -23,7 +23,7 @@ export const Table = <T extends Record<string, any>>({
 }: TableProps<T>) => {
 	// Extract column headers from first row
 	const columns = useMemo(() => {
-		if (tableData.length === 0) return [];
+		if (tableData?.length === 0) return [];
 		return Object.keys(tableData[0]);
 	}, [tableData]);
 

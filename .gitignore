@@ -23,5 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
-#added
+# Added
+# Environment variables
 .env
+
+# Mobile
+android
+ios
+/.gradle
